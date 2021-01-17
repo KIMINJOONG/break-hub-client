@@ -1,0 +1,1 @@
+export const BLUE_COLOR:string = '#336699';

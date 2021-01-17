@@ -1,4 +1,5 @@
 export interface IProps {
+    id: string;
     text: string;
     type: string;
     value: string;

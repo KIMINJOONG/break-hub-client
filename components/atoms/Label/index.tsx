@@ -1,9 +1,11 @@
 import React from "react";
 import { IProps } from "./type";
-import styles from "./Label.module.scss";
+import styled from "styled-components";
 
-const Label = ({ text }: IProps) => {
-  return <label className={`${styles.default}`}>{text}</label>;
+const LabelComponent = styled.label``;
+
+const Label = ({ text, htmlFor }: IProps) => {
+  return <LabelComponent htmlFor={htmlFor}>{text}</LabelComponent>;
 };
 
 export default Label;

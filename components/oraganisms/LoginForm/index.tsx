@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { BLUE_COLOR } from "../../../utils/theme";
 import Button from "../../atoms/Button";
 import FormItem from "../../molecules/FormItem";
 
@@ -38,6 +39,7 @@ const LoginForm = () => {
       }}
     >
       <FormItem
+        id={"id"}
         text={"아이디"}
         type={"text"}
         value={id}
@@ -45,14 +47,15 @@ const LoginForm = () => {
         placeholder={"아이디를 입력해주세요."}
       />
       <FormItem
-        text={"아이디"}
+        id={"password"}
+        text={"비밀번호"}
         type={"text"}
         value={password}
         onChange={onChangePassword}
         placeholder={"비밀번호를 입력해주세요."}
       />
       <div style={{ width: "100%", textAlign: "center" }}>
-        <Button type={"submit"} color={"blue"}>
+        <Button type={"submit"} color={BLUE_COLOR}>
           로그인
         </Button>
       </div>
