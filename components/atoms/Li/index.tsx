@@ -9,8 +9,8 @@ const LiComponent = styled.li`
   box-sizing: border-box;
 `;
 
-const Li = ({ text }: IProps) => {
-  return <LiComponent>{text}</LiComponent>;
+const Li = ({ children = undefined, text }: IProps) => {
+  return <LiComponent>{children ? children : text}</LiComponent>;
 };
 
 export default Li;

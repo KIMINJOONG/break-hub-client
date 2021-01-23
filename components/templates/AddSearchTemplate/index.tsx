@@ -2,16 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import Span from "../../atoms/Span";
 import SideMenuList from "../../oraganisms/SideMenuList";
-import Link from "next/link";
 
-const MainComponent = styled.div`
+const AddSearchComponent = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
 
-const MainTemplate = () => {
+const AddSearchTemplate = () => {
   return (
-    <MainComponent>
+    <AddSearchComponent>
       <div
         style={{
           display: "flex",
@@ -42,13 +41,10 @@ const MainTemplate = () => {
           boxSizing: "border-box",
         }}
       >
-        <Link href={"/addSearch"}>
-          <a>ㅎㅏ이</a>
-        </Link>
-        동영상 리스트
+        검색조건 추가
       </div>
-    </MainComponent>
+    </AddSearchComponent>
   );
 };
 
-export default MainTemplate;
+export default AddSearchTemplate;

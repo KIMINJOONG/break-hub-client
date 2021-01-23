@@ -1,21 +1,23 @@
 import React from "react";
 import styled from "styled-components";
-import List from "../../molecules/List";
+import Menu from "../../molecules/Menu";
 
 const SideMenuListComponent = styled.div``;
 
 const menuDummy = [
   {
-    text: "카테고리 추가",
+    text: "검색조건 추가",
+    href: "addSearch",
   },
   {
-    text: "게시판",
+    text: "동영상 게시판",
+    href: "main",
   },
 ];
 const SideMenuList = () => {
   return (
     <SideMenuListComponent>
-      <List items={menuDummy} />
+      <Menu items={menuDummy} />
     </SideMenuListComponent>
   );
 };
