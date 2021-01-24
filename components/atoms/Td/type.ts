@@ -1,3 +1,3 @@
-export interface IProps {   
-    text: string | number;
+export interface IProps {
+  children: React.ReactNode;
 }
