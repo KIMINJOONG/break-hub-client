@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import styled from "styled-components";
@@ -7,7 +7,9 @@ import { loadSearchRequirementsAction } from "../../../actions/searchRequirement
 import { LOAD_SEARCH_REQUIREMENT_REQUEST } from "../../../actions/searchRequirement/type";
 import { RootState } from "../../../reducers";
 import wrapper from "../../../stores/configureStore";
+import Input from "../../atoms/Input";
 import Span from "../../atoms/Span";
+import AddSearchForm from "../../oraganisms/AddSearchForm";
 import SideMenuList from "../../oraganisms/SideMenuList";
 
 const AddSearchComponent = styled.div`
@@ -57,8 +59,12 @@ const AddSearchTemplate = () => {
           width: "70%",
           border: "1px solid blue",
           boxSizing: "border-box",
+          flexWrap: "wrap",
         }}
       >
+        <div>
+          <AddSearchForm />
+        </div>
         <table
           style={{
             width: "100%",
@@ -69,28 +75,34 @@ const AddSearchTemplate = () => {
             borderSpacing: "a",
           }}
         >
-          <tr style={{ border: "1px solid black", padding: "10px" }}>
-            <td style={{ border: "1px solid black", padding: "10px" }}>
-              검색조건 명
-            </td>
-            <td style={{ border: "1px solid black", padding: "10px" }}>
-              코드명
-            </td>
-          </tr>
-          {searchRequirements &&
-            searchRequirements.map((searchRequirement: any, index: number) => (
-              <tr
-                key={index}
-                style={{ border: "1px solid black", padding: "10px" }}
-              >
-                <td style={{ border: "1px solid black", padding: "10px" }}>
-                  {searchRequirement.name}
-                </td>
-                <td style={{ border: "1px solid black", padding: "10px" }}>
-                  {searchRequirement.code}
-                </td>
-              </tr>
-            ))}
+          <thead>
+            <tr style={{ border: "1px solid black", padding: "10px" }}>
+              <td style={{ border: "1px solid black", padding: "10px" }}>
+                검색조건 명
+              </td>
+              <td style={{ border: "1px solid black", padding: "10px" }}>
+                코드명
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            {searchRequirements &&
+              searchRequirements.map(
+                (searchRequirement: any, index: number) => (
+                  <tr
+                    key={index}
+                    style={{ border: "1px solid black", padding: "10px" }}
+                  >
+                    <td style={{ border: "1px solid black", padding: "10px" }}>
+                      {searchRequirement.name}
+                    </td>
+                    <td style={{ border: "1px solid black", padding: "10px" }}>
+                      {searchRequirement.code}
+                    </td>
+                  </tr>
+                )
+              )}
+          </tbody>
         </table>
       </div>
     </AddSearchComponent>
