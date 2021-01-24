@@ -1,8 +1,8 @@
-import React, { useMemo } from "react";
-import { IProps } from "./type";
-import Input from "../../atoms/Input";
-import Label from "../../atoms/Label";
-import styled from "styled-components";
+import React, { useMemo } from 'react';
+import { IProps } from './type';
+import Input from '../../atoms/Input';
+import Label from '../../atoms/Label';
+import styled from 'styled-components';
 
 const FormItemComponent = styled.div`
   width: 100%;
