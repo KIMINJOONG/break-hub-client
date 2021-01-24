@@ -5,7 +5,6 @@ import Ul from "../../atoms/Ul";
 import { IProps } from "./type";
 
 const Menu = ({ items }: IProps) => {
-  console.log("Menu");
   return (
     <Ul>
       {items.map((item: any, index: number) => (
