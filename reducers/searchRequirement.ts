@@ -18,7 +18,7 @@ import {
 import { searchRequirement } from '../type/server';
 
 export const initialState = {
-  searchRequirements: [] as Array<searchRequirement>,
+  searchRequirements: [] as any,
   searchRequirementsLoading: false,
   searchRequirementsDone: false,
   searchRequirementsError: null,
@@ -40,8 +40,11 @@ const reducer = (state = initialState, action: SearchRequirementActionType) => {
   return produce(state, (draft) => {
     switch (action.type) {
       case ONCHANGE_ADD_SEARCH_REQUIREMENT: {
-        draft.searchRequirements[action.index] = {
-          ...draft.searchRequirements[action.index],
+        const targetIndex = draft.searchRequirements.findIndex(
+          (item: searchRequirement) => action.seq === item.seq
+        );
+        draft.searchRequirements[targetIndex] = {
+          ...draft.searchRequirements[targetIndex],
           [action.e.target.name]: action.e.target.value,
         };
         break;

@@ -30,11 +30,8 @@ export const removeSearchRequirementAction = (seq: number) => ({
   seq,
 });
 
-export const onChangeAddSearchAction = (
-  index: number,
-  e: React.ChangeEvent
-) => ({
+export const onChangeAddSearchAction = (e: React.ChangeEvent, seq: number) => ({
   type: ONCHANGE_ADD_SEARCH_REQUIREMENT,
-  index,
+  seq,
   e,
 });

@@ -86,7 +86,7 @@ interface IREMOVE_SEARCH_REQUIREMENT_FAILURE {
 interface IONCHANGE_ADD_SEARCH_REQUIREMENT {
   type: typeof ONCHANGE_ADD_SEARCH_REQUIREMENT;
   e: React.ChangeEvent<HTMLInputElement>;
-  index: number;
+  seq: number;
 }
 
 export type SearchRequirementActionType =

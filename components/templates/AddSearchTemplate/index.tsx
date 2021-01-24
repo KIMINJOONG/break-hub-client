@@ -36,15 +36,19 @@ const AddSearchTemplate = () => {
   }, []);
 
   const onClickUpdate = (index: number, seq: number) => {
+    const targetIndex: number = searchRequirements.findIndex(
+      (item: searchRequirement) => seq === item.seq
+    );
+
     const data: searchRequirement = {
-      seq: searchRequirements[index].seq,
-      name: searchRequirements[index].name,
-      code: searchRequirements[index].code,
+      seq: searchRequirements[targetIndex].seq,
+      name: searchRequirements[targetIndex].name,
+      code: searchRequirements[targetIndex].code,
       createdAt: '',
     };
-    console.log(`index : ${index}`);
+    console.log(`targetIndex : ${targetIndex}`);
     console.log(searchRequirements);
-    console.log(searchRequirements[index]);
+    console.log(searchRequirements[targetIndex]);
     // dispatch(updateSearchRequirementAction(seq, data));
   };
 
@@ -53,11 +57,11 @@ const AddSearchTemplate = () => {
   }, []);
 
   const onChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    (e: React.ChangeEvent<HTMLInputElement>, seq: number) => {
       e.persist();
-      dispatch(onChangeAddSearchAction(index, e));
+      dispatch(onChangeAddSearchAction(e, seq));
     },
-    []
+    [searchRequirements]
   );
 
   return (
@@ -139,7 +143,7 @@ const AddSearchTemplate = () => {
                       <Input
                         id={`searchRequirementCode_${searchRequirement.seq}`}
                         name={'code'}
-                        onChange={(e) => onChange(e, index)}
+                        onChange={(e) => onChange(e, searchRequirement.seq)}
                         value={searchRequirement.code}
                       />
                     </td>
