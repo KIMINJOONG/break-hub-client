@@ -1,5 +1,5 @@
-import Document, { Html, Main, NextScript, Head } from "next/document";
-import { ServerStyleSheet } from "styled-components";
+import Document, { Html, Main, NextScript, Head } from 'next/document';
+import { ServerStyleSheet } from 'styled-components';
 
 interface IProps {
   styleTags: Array<React.ReactElement<{}>>;
