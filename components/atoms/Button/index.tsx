@@ -1,11 +1,11 @@
-import React, { useMemo } from "react";
-import { IProps } from "./type";
-import styled from "styled-components";
+import React, { useMemo } from 'react';
+import { IProps } from './type';
+import styled from 'styled-components';
 
 const ButtonComponent = styled.button`
   width: 100%;
   height: 30px;
-  background-color: ${(props: any) => (props.color ? props.color : "#fff")};
+  background-color: ${(props: any) => (props.color ? props.color : '#fff')};
 `;
 
 const Button = ({ children, type, color, onClick }: IProps) => {
@@ -15,7 +15,7 @@ const Button = ({ children, type, color, onClick }: IProps) => {
         {children}
       </ButtonComponent>
     );
-  }, []);
+  }, [type, onClick, color]);
 };
 
 export default Button;

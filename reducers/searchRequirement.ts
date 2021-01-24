@@ -18,22 +18,22 @@ import {
 import { searchRequirement } from '../type/server';
 
 export const initialState = {
-  searchRequirements: [] as any,
+  searchRequirements: [] as Array<searchRequirement>,
   searchRequirementsLoading: false,
   searchRequirementsDone: false,
-  searchRequirementsError: null,
+  searchRequirementsError: null as any,
   addSearchRequirement: null,
   addSearchRequirementLoading: false,
   addSearchRequirementDone: false,
-  addSearchRequirementError: null,
+  addSearchRequirementError: null as any,
   updateSearchRequirement: null,
   updateSearchRequirementLoading: false,
   updateSearchRequirementDone: false,
-  updateSearchRequirementError: null,
+  updateSearchRequirementError: null as any,
   removeSearchRequirement: null,
   removeSearchRequirementLoading: false,
   removeSearchRequirementDone: false,
-  removeSearchRequirementError: null,
+  removeSearchRequirementError: null as any,
 };
 
 const reducer = (state = initialState, action: SearchRequirementActionType) => {

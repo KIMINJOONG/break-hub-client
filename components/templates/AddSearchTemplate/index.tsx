@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import styled from 'styled-components';
@@ -35,26 +35,29 @@ const AddSearchTemplate = () => {
     dispatch(loadSearchRequirementsAction());
   }, []);
 
-  const onClickUpdate = (index: number, seq: number) => {
-    const targetIndex: number = searchRequirements.findIndex(
-      (item: searchRequirement) => seq === item.seq
-    );
+  const onClickUpdate = useCallback(
+    (seq: number) => {
+      const targetIndex: number = searchRequirements.findIndex(
+        (item: searchRequirement) => seq === item.seq
+      );
 
-    const data: searchRequirement = {
-      seq: searchRequirements[targetIndex].seq,
-      name: searchRequirements[targetIndex].name,
-      code: searchRequirements[targetIndex].code,
-      createdAt: '',
-    };
-    console.log(`targetIndex : ${targetIndex}`);
-    console.log(searchRequirements);
-    console.log(searchRequirements[targetIndex]);
-    // dispatch(updateSearchRequirementAction(seq, data));
-  };
+      const data: searchRequirement = {
+        seq: searchRequirements[targetIndex].seq,
+        name: searchRequirements[targetIndex].name,
+        code: searchRequirements[targetIndex].code,
+        createdAt: '',
+      };
+      dispatch(updateSearchRequirementAction(seq, data));
+    },
+    [searchRequirements]
+  );
 
-  const onClickRemove = useCallback((seq) => {
-    dispatch(removeSearchRequirementAction(seq));
-  }, []);
+  const onClickRemove = useCallback(
+    (seq) => {
+      dispatch(removeSearchRequirementAction(seq));
+    },
+    [searchRequirements]
+  );
 
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, seq: number) => {
@@ -125,8 +128,8 @@ const AddSearchTemplate = () => {
           </thead>
           <tbody>
             {searchRequirements &&
-              searchRequirements.map(
-                (searchRequirement: searchRequirement, index: number) => (
+              (searchRequirements.map(
+                (searchRequirement: searchRequirement) => (
                   <tr
                     key={searchRequirement.seq}
                     style={{ border: '1px solid black', padding: '10px' }}
@@ -135,7 +138,7 @@ const AddSearchTemplate = () => {
                       <Input
                         id={`searchRequirementValue_${searchRequirement.seq}`}
                         name={'name'}
-                        onChange={(e) => onChange(e, index)}
+                        onChange={(e) => onChange(e, searchRequirement.seq)}
                         value={searchRequirement.name}
                       />
                     </td>
@@ -151,9 +154,7 @@ const AddSearchTemplate = () => {
                       <Button
                         type={'button'}
                         color={BLUE_COLOR}
-                        onClick={() =>
-                          onClickUpdate(index, searchRequirement.seq)
-                        }
+                        onClick={() => onClickUpdate(searchRequirement.seq)}
                       >
                         수정
                       </Button>
@@ -167,7 +168,7 @@ const AddSearchTemplate = () => {
                     </td>
                   </tr>
                 )
-              )}
+              ) as Array<searchRequirement>)}
           </tbody>
         </table>
       </div>

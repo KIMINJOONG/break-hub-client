@@ -108,8 +108,7 @@ function* updateSearchRequirement(action: any) {
       type: UPDATE_SEARCH_REQUIREMENT_SUCCESS,
       data: result.data,
     });
-  } catch (e) {
-    console.log(e);
+  } catch (e: any) {
     // loginAPI 실패
     yield put({
       type: UPDATE_SEARCH_REQUIREMENT_FAILURE,
