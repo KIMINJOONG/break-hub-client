@@ -9,7 +9,7 @@ export type Board = {
   seq: number;
   title: string;
   content: string;
-  youtubeLink: string;
+  videoLink: string;
   category: number;
   search: Array<string>;
 };

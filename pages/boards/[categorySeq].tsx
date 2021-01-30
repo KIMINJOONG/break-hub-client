@@ -36,14 +36,15 @@ const CategoryBoards = () => {
           height: '50px',
           border: '1px solid black',
           boxSizing: 'border-box',
+          flexDirection: 'column',
         }}
       >
         <Span>헤더</Span>
       </div>
       <div
         style={{
-          width: '30%',
-          height: '100vh',
+          flex: 1,
+          maxWidth: '115px',
           border: '1px solid red',
           boxSizing: 'border-box',
         }}
@@ -53,61 +54,71 @@ const CategoryBoards = () => {
       <div
         style={{
           display: 'flex',
+          flex: 1,
           padding: '10px',
-          width: '70%',
           border: '1px solid blue',
           boxSizing: 'border-box',
           flexWrap: 'wrap',
+          minHeight: '100vh',
         }}
       >
-        <table
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            border: '1px solid black',
-            boxSizing: 'border-box',
-            borderCollapse: 'collapse',
-            borderSpacing: 'a',
-          }}
-        >
-          <thead>
-            <tr style={{ border: '1px solid black', padding: '10px' }}>
-              <td style={{ border: '1px solid black', padding: '10px' }}>
-                번호
-              </td>
-              <td style={{ border: '1px solid black', padding: '10px' }}>
-                제목
-              </td>
-              <td>검색조건</td>
-            </tr>
-          </thead>
-          <tbody>
-            {boards &&
-              (boards.map((board: Board) => (
-                <tr
-                  onClick={() =>
-                    router.push(`/boards/${board.category}/${board.seq}`)
-                  }
-                  key={board.seq}
+        <ul style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {boards &&
+            (boards.map((board: Board) => (
+              <li
+                onClick={() =>
+                  router.push(`/boards/${board.category}/${board.seq}`)
+                }
+                style={{
+                  display: 'flex',
+                  width: '31%',
+                  flexDirection: 'column',
+                  marginBottom: '2rem',
+                  padding: '0 1rem',
+                  cursor: 'pointer',
+                }}
+              >
+                <figure
                   style={{
-                    border: '1px solid black',
-                    padding: '10px',
-                    cursor: 'pointer',
+                    minWidth: '480px',
+                    height: 0,
+                    paddingBottom: '60%',
+                    backgroundColor: 'lightgray',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover',
+                    backgroundImage: `url('https://img.youtube.com/vi/${board.videoLink}/hqdefault.jpg')`,
+                  }}
+                ></figure>
+                <div
+                  style={{
+                    flex: '1 1 auto',
+                    padding: '1em',
+                    backgroundColor: 'white',
                   }}
                 >
-                  <td style={{ border: '1px solid black', padding: '10px' }}>
-                    {board.seq}
-                  </td>
-                  <td style={{ border: '1px solid black', padding: '10px' }}>
-                    {board.title}
-                  </td>
-                  <td style={{ border: '1px solid black', padding: '10px' }}>
-                    {board.search}
-                  </td>
-                </tr>
-              )) as Array<Board>)}
-          </tbody>
-        </table>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      marginBottom: '1rem',
+                    }}
+                  >
+                    <h2>{board.title}</h2>
+                    <span>2020-01-30</span>
+                  </div>
+                  <div>
+                    <p>{board.content}</p>
+                  </div>
+                  <div>
+                    {board.search.map((search: string) => (
+                      <span style={{ marginRight: '0.3rem' }}>#{search}</span>
+                    ))}
+                  </div>
+                </div>
+              </li>
+            )) as Array<Board>)}
+        </ul>
       </div>
     </MainComponent>
   );

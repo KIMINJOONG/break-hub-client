@@ -1,8 +1,8 @@
-import React from "react";
-import Li from "../../atoms/Li";
-import LinkAtom from "../../atoms/Link";
-import Ul from "../../atoms/Ul";
-import { IProps } from "./type";
+import React from 'react';
+import Li from '../../atoms/Li';
+import LinkAtom from '../../atoms/Link';
+import Ul from '../../atoms/Ul';
+import { IProps } from './type';
 
 const Menu = ({ items }: IProps) => {
   return (
