@@ -8,6 +8,7 @@ import {
   LOAD_BOARD_REQUEST,
   LOAD_BOARD_SUCCESS,
 } from '../actions/board/type';
+import { Board } from '../type/server';
 
 const dummyBoards = [
   {
@@ -87,7 +88,7 @@ function* loadBoard(action: any) {
   try {
     //   const result = yield call(loadBoardAPI, action.categorySeq, action.boardSeq);
     const result = {
-      data: dummyBoards[action.boardSeq],
+      data: dummyBoards.find((board: Board) => board.seq === action.boardSeq),
     };
     // yield delay(3000);
     yield put({
