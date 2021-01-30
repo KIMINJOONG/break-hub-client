@@ -2,6 +2,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { combineReducers } from 'redux';
 
 import searchRequirement from './searchRequirement';
+import board from './board';
 
 // (이전상태, 액션) => 다음상태
 const rootReducer = (state: any, action: any) => {
@@ -11,6 +12,7 @@ const rootReducer = (state: any, action: any) => {
     default: {
       const combinedReducer = combineReducers({
         searchRequirement,
+        board,
       });
       return combinedReducer(state, action);
     }

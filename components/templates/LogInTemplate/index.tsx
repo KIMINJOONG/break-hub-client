@@ -1,5 +1,5 @@
-import React from "react";
-import LoginForm from "../../oraganisms/LoginForm";
+import React from 'react';
+import LoginForm from '../../oraganisms/LoginForm';
 
 const LogInTemplate = () => {
   return (

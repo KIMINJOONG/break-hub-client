@@ -1,23 +1,23 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import Span from '../../atoms/Span';
-import SideMenuList from '../../oraganisms/SideMenuList';
 import axios from 'axios';
-import wrapper from '../../../stores/configureStore';
-import { LOAD_BOARDS_REQUEST } from '../../../actions/board/type';
+import wrapper from '../../stores/configureStore';
+import { LOAD_BOARDS_REQUEST } from '../../actions/board/type';
 import { END } from 'redux-saga';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../reducers';
-import { loadBoardsAction } from '../../../actions/board/action';
-import { Board } from '../../../type/server';
+import { RootState } from '../../reducers';
+import { loadBoardsAction } from '../../actions/board/action';
+import { Board } from '../../type/server';
 import { useRouter } from 'next/dist/client/router';
+import Span from '../../components/atoms/Span';
+import SideMenuList from '../../components/oraganisms/SideMenuList';
 
 const MainComponent = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
 
-const MainTemplate = () => {
+const CategoryBoards = () => {
   const { boards } = useSelector((state: RootState) => state.board);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -86,10 +86,14 @@ const MainTemplate = () => {
               (boards.map((board: Board) => (
                 <tr
                   onClick={() =>
-                    router.push(`/board/${board.category}/${board.seq}`)
+                    router.push(`/boards/${board.category}/${board.seq}`)
                   }
                   key={board.seq}
-                  style={{ border: '1px solid black', padding: '10px' }}
+                  style={{
+                    border: '1px solid black',
+                    padding: '10px',
+                    cursor: 'pointer',
+                  }}
                 >
                   <td style={{ border: '1px solid black', padding: '10px' }}>
                     {board.seq}
@@ -125,4 +129,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
   }
 );
 
-export default MainTemplate;
+export default CategoryBoards;

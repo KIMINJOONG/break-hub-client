@@ -1,0 +1,20 @@
+export const LOAD_BOARDS_REQUEST = 'LOAD_BOARDS_REQUEST';
+export const LOAD_BOARDS_SUCCESS = 'LOAD_BOARDS_SUCCESS';
+export const LOAD_BOARDS_FAILURE = 'LOAD_BOARDS_FAILURE';
+
+interface ILOAD_BOARDS_REQUEST {
+  type: typeof LOAD_BOARDS_REQUEST;
+}
+interface ILOAD_BOARDS_SUCCESS {
+  type: typeof LOAD_BOARDS_SUCCESS;
+  data: any;
+}
+interface ILOAD_BOARDS_FAILURE {
+  type: typeof LOAD_BOARDS_FAILURE;
+  error: Error;
+}
+
+export type boardActionType =
+  | ILOAD_BOARDS_REQUEST
+  | ILOAD_BOARDS_SUCCESS
+  | ILOAD_BOARDS_FAILURE;
