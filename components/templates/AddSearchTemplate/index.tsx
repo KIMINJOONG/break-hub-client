@@ -8,8 +8,8 @@ import {
   onChangeAddSearchAction,
   removeSearchTagAction,
   updateSearchTagAction,
-} from '../../../actions/searchRequirement/action';
-import { LOAD_SEARCH_REQUIREMENTS_REQUEST } from '../../../actions/searchRequirement/type';
+} from '../../../actions/searchTag/action';
+import { LOAD_SEARCH_TAGS_REQUEST } from '../../../actions/searchTag/type';
 import { RootState } from '../../../reducers';
 import wrapper from '../../../stores/configureStore';
 import { searchTag } from '../../../type/server';
@@ -27,9 +27,7 @@ const AddSearchComponent = styled.div`
 
 const AddSearchTemplate = () => {
   const dispatch = useDispatch();
-  const { searchRequirements } = useSelector(
-    (state: RootState) => state.searchRequirement
-  );
+  const { searchTags } = useSelector((state: RootState) => state.searchTag);
 
   useEffect(() => {
     dispatch(loadSearchTagsAction());
@@ -37,25 +35,25 @@ const AddSearchTemplate = () => {
 
   const onClickUpdate = useCallback(
     (seq: number) => {
-      const targetIndex: number = searchRequirements.findIndex(
+      const targetIndex: number = searchTags.findIndex(
         (item: searchTag) => seq === item.seq
       );
 
       const data: searchTag = {
-        seq: searchRequirements[targetIndex].seq,
-        name: searchRequirements[targetIndex].name,
+        seq: searchTags[targetIndex].seq,
+        name: searchTags[targetIndex].name,
         createdAt: '',
       };
       dispatch(updateSearchTagAction(seq, data));
     },
-    [searchRequirements]
+    [searchTags]
   );
 
   const onClickRemove = useCallback(
     (seq) => {
       dispatch(removeSearchTagAction(seq));
     },
-    [searchRequirements]
+    [searchTags]
   );
 
   const onChange = useCallback(
@@ -63,7 +61,7 @@ const AddSearchTemplate = () => {
       e.persist();
       dispatch(onChangeAddSearchAction(e, seq));
     },
-    [searchRequirements]
+    [searchTags]
   );
 
   return (
@@ -124,32 +122,32 @@ const AddSearchTemplate = () => {
             </tr>
           </thead>
           <tbody>
-            {searchRequirements &&
-              (searchRequirements.map((searchRequirement: searchTag) => (
+            {searchTags &&
+              (searchTags.map((searchTag: searchTag) => (
                 <tr
-                  key={searchRequirement.seq}
+                  key={searchTag.seq}
                   style={{ border: '1px solid black', padding: '10px' }}
                 >
                   <td style={{ border: '1px solid black', padding: '10px' }}>
                     <Input
-                      id={`searchRequirementValue_${searchRequirement.seq}`}
+                      id={`searchTagValue_${searchTag.seq}`}
                       name={'name'}
-                      onChange={(e) => onChange(e, searchRequirement.seq)}
-                      value={searchRequirement.name}
+                      onChange={(e) => onChange(e, searchTag.seq)}
+                      value={searchTag.name}
                     />
                   </td>
                   <td style={{ border: '1px solid black', padding: '10px' }}>
                     <Button
                       type={'button'}
                       color={BLUE_COLOR}
-                      onClick={() => onClickUpdate(searchRequirement.seq)}
+                      onClick={() => onClickUpdate(searchTag.seq)}
                     >
                       수정
                     </Button>
                     <Button
                       type={'button'}
                       color={RED_COLOR}
-                      onClick={() => onClickRemove(searchRequirement.seq)}
+                      onClick={() => onClickRemove(searchTag.seq)}
                     >
                       삭제
                     </Button>
@@ -172,7 +170,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       axios.defaults.headers.Authorization = cookie;
     }
     context.store.dispatch({
-      type: LOAD_SEARCH_REQUIREMENTS_REQUEST,
+      type: LOAD_SEARCH_TAGS_REQUEST,
     });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();

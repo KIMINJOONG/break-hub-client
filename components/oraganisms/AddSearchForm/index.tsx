@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSearchTagAction } from '../../../actions/searchRequirement/action';
+import { addSearchTagAction } from '../../../actions/searchTag/action';
 import { RootState } from '../../../reducers';
 import { BLUE_COLOR } from '../../../utils/theme';
 import Button from '../../atoms/Button';
@@ -8,9 +8,7 @@ import FormItem from '../../molecules/FormItem';
 
 const AddSearchForm = () => {
   const dispatch = useDispatch();
-  const { searchRequirements } = useSelector(
-    (state: RootState) => state.searchRequirement
-  );
+  const { searchTags } = useSelector((state: RootState) => state.searchTag);
   const [addSearchValue, setAddSearchValue] = useState('');
 
   const onChangeAddSearchValue = useCallback(
@@ -24,7 +22,7 @@ const AddSearchForm = () => {
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const data = {
-        seq: searchRequirements.length + 1,
+        seq: searchTags.length + 1,
         name: addSearchValue,
         createdAt: '2021-03-14',
       };
@@ -34,7 +32,9 @@ const AddSearchForm = () => {
   );
 
   const onClickSearch = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {},
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      null;
+    },
     []
   );
   return useMemo(() => {

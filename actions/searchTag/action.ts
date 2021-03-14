@@ -1,34 +1,34 @@
 import { searchTag } from '../../type/server';
 import {
-  LOAD_SEARCH_REQUIREMENTS_REQUEST,
-  ADD_SEARCH_REQUIREMENT_REQUEST,
-  REMOVE_SEARCH_REQUIREMENT_REQUEST,
-  UPDATE_SEARCH_REQUIREMENT_REQUEST,
-  ONCHANGE_ADD_SEARCH_REQUIREMENT,
+  ADD_SEARCH_TAG_REQUEST,
+  LOAD_SEARCH_TAGS_REQUEST,
+  ONCHANGE_ADD_SEARCH_TAG,
+  REMOVE_SEARCH_TAG_REQUEST,
+  UPDATE_SEARCH_TAG_REQUEST,
 } from './type';
 
 export const loadSearchTagsAction = () => ({
-  type: LOAD_SEARCH_REQUIREMENTS_REQUEST,
+  type: LOAD_SEARCH_TAGS_REQUEST,
 });
 
 export const addSearchTagAction = (data: searchTag) => ({
-  type: ADD_SEARCH_REQUIREMENT_REQUEST,
+  type: ADD_SEARCH_TAG_REQUEST,
   data,
 });
 
 export const updateSearchTagAction = (seq: number, data: searchTag) => ({
-  type: UPDATE_SEARCH_REQUIREMENT_REQUEST,
+  type: UPDATE_SEARCH_TAG_REQUEST,
   seq,
   data,
 });
 
 export const removeSearchTagAction = (seq: number) => ({
-  type: REMOVE_SEARCH_REQUIREMENT_REQUEST,
+  type: REMOVE_SEARCH_TAG_REQUEST,
   seq,
 });
 
 export const onChangeAddSearchAction = (e: React.ChangeEvent, seq: number) => ({
-  type: ONCHANGE_ADD_SEARCH_REQUIREMENT,
+  type: ONCHANGE_ADD_SEARCH_TAG,
   seq,
   e,
 });

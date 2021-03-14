@@ -237,6 +237,6 @@ function* watchAddBoard() {
   yield takeLatest(ADD_BOARD_REQUEST, addBoard);
 }
 
-export default function* searchRequirementSaga() {
+export default function* boardSaga() {
   yield all([fork(watchLoadBoards), fork(watchLoadBoard), fork(watchAddBoard)]);
 }

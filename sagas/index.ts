@@ -1,6 +1,6 @@
 import { all, call } from 'redux-saga/effects';
 import axios from 'axios';
-import searchRequirement from './searchRequirement';
+import searchTag from './searchTag';
 import board from './board';
 
 axios.defaults.baseURL =
@@ -9,5 +9,5 @@ axios.defaults.baseURL =
     : 'http://localhost:4000';
 
 export default function* rootSaga() {
-  yield all([call(searchRequirement), call(board)]);
+  yield all([call(searchTag), call(board)]);
 }
