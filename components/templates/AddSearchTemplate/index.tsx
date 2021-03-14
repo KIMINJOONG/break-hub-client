@@ -4,15 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import styled from 'styled-components';
 import {
-  loadSearchRequirementsAction,
+  loadSearchTagsAction,
   onChangeAddSearchAction,
-  removeSearchRequirementAction,
-  updateSearchRequirementAction,
+  removeSearchTagAction,
+  updateSearchTagAction,
 } from '../../../actions/searchRequirement/action';
 import { LOAD_SEARCH_REQUIREMENTS_REQUEST } from '../../../actions/searchRequirement/type';
 import { RootState } from '../../../reducers';
 import wrapper from '../../../stores/configureStore';
-import { searchRequirement } from '../../../type/server';
+import { searchTag } from '../../../type/server';
 import { BLUE_COLOR, RED_COLOR } from '../../../utils/theme';
 import Button from '../../atoms/Button';
 import Input from '../../atoms/Input';
@@ -32,29 +32,28 @@ const AddSearchTemplate = () => {
   );
 
   useEffect(() => {
-    dispatch(loadSearchRequirementsAction());
+    dispatch(loadSearchTagsAction());
   }, []);
 
   const onClickUpdate = useCallback(
     (seq: number) => {
       const targetIndex: number = searchRequirements.findIndex(
-        (item: searchRequirement) => seq === item.seq
+        (item: searchTag) => seq === item.seq
       );
 
-      const data: searchRequirement = {
+      const data: searchTag = {
         seq: searchRequirements[targetIndex].seq,
         name: searchRequirements[targetIndex].name,
-        code: searchRequirements[targetIndex].code,
         createdAt: '',
       };
-      dispatch(updateSearchRequirementAction(seq, data));
+      dispatch(updateSearchTagAction(seq, data));
     },
     [searchRequirements]
   );
 
   const onClickRemove = useCallback(
     (seq) => {
-      dispatch(removeSearchRequirementAction(seq));
+      dispatch(removeSearchTagAction(seq));
     },
     [searchRequirements]
   );
@@ -121,55 +120,42 @@ const AddSearchTemplate = () => {
               <td style={{ border: '1px solid black', padding: '10px' }}>
                 검색조건 명
               </td>
-              <td style={{ border: '1px solid black', padding: '10px' }}>
-                코드명
-              </td>
               <td>기능</td>
             </tr>
           </thead>
           <tbody>
             {searchRequirements &&
-              (searchRequirements.map(
-                (searchRequirement: searchRequirement) => (
-                  <tr
-                    key={searchRequirement.seq}
-                    style={{ border: '1px solid black', padding: '10px' }}
-                  >
-                    <td style={{ border: '1px solid black', padding: '10px' }}>
-                      <Input
-                        id={`searchRequirementValue_${searchRequirement.seq}`}
-                        name={'name'}
-                        onChange={(e) => onChange(e, searchRequirement.seq)}
-                        value={searchRequirement.name}
-                      />
-                    </td>
-                    <td style={{ border: '1px solid black', padding: '10px' }}>
-                      <Input
-                        id={`searchRequirementCode_${searchRequirement.seq}`}
-                        name={'code'}
-                        onChange={(e) => onChange(e, searchRequirement.seq)}
-                        value={searchRequirement.code}
-                      />
-                    </td>
-                    <td style={{ border: '1px solid black', padding: '10px' }}>
-                      <Button
-                        type={'button'}
-                        color={BLUE_COLOR}
-                        onClick={() => onClickUpdate(searchRequirement.seq)}
-                      >
-                        수정
-                      </Button>
-                      <Button
-                        type={'button'}
-                        color={RED_COLOR}
-                        onClick={() => onClickRemove(searchRequirement.seq)}
-                      >
-                        삭제
-                      </Button>
-                    </td>
-                  </tr>
-                )
-              ) as Array<searchRequirement>)}
+              (searchRequirements.map((searchRequirement: searchTag) => (
+                <tr
+                  key={searchRequirement.seq}
+                  style={{ border: '1px solid black', padding: '10px' }}
+                >
+                  <td style={{ border: '1px solid black', padding: '10px' }}>
+                    <Input
+                      id={`searchRequirementValue_${searchRequirement.seq}`}
+                      name={'name'}
+                      onChange={(e) => onChange(e, searchRequirement.seq)}
+                      value={searchRequirement.name}
+                    />
+                  </td>
+                  <td style={{ border: '1px solid black', padding: '10px' }}>
+                    <Button
+                      type={'button'}
+                      color={BLUE_COLOR}
+                      onClick={() => onClickUpdate(searchRequirement.seq)}
+                    >
+                      수정
+                    </Button>
+                    <Button
+                      type={'button'}
+                      color={RED_COLOR}
+                      onClick={() => onClickRemove(searchRequirement.seq)}
+                    >
+                      삭제
+                    </Button>
+                  </td>
+                </tr>
+              )) as Array<searchTag>)}
           </tbody>
         </table>
       </div>

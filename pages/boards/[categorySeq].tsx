@@ -7,7 +7,7 @@ import { END } from 'redux-saga';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers';
 import { loadBoardsAction } from '../../actions/board/action';
-import { Board } from '../../type/server';
+import { Board, searchTag } from '../../type/server';
 import { useRouter } from 'next/dist/client/router';
 import Span from '../../components/atoms/Span';
 import SideMenuList from '../../components/oraganisms/SideMenuList';
@@ -87,7 +87,7 @@ const CategoryBoards = () => {
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
-                    backgroundImage: `url('https://img.youtube.com/vi/${board.videoLink}/hqdefault.jpg')`,
+                    backgroundImage: `url('https://img.youtube.com/vi/${board.videoUrl}/hqdefault.jpg')`,
                   }}
                 ></figure>
                 <div
@@ -111,8 +111,10 @@ const CategoryBoards = () => {
                     <p>{board.content}</p>
                   </div>
                   <div>
-                    {board.search.map((search: string) => (
-                      <span style={{ marginRight: '0.3rem' }}>#{search}</span>
+                    {board.searchTags.map((searchTag: searchTag) => (
+                      <span style={{ marginRight: '0.3rem' }}>
+                        #{searchTag.name}
+                      </span>
                     ))}
                   </div>
                 </div>

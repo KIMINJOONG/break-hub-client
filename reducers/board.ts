@@ -1,5 +1,8 @@
 import produce from 'immer';
 import {
+  ADD_BOARD_FAILURE,
+  ADD_BOARD_REQUEST,
+  ADD_BOARD_SUCCESS,
   boardActionType,
   LOAD_BOARDS_FAILURE,
   LOAD_BOARDS_REQUEST,
@@ -19,11 +22,33 @@ export const initialState = {
   loadBoardLoading: false,
   loadBoardDone: false,
   loadBoardError: null as any,
+  addBoard: null as Board | null,
+  addBoardLoading: false,
+  addBoardDone: false,
+  addBoardError: null as any,
 };
 
 const reducer = (state = initialState, action: boardActionType) => {
   return produce(state, (draft) => {
     switch (action.type) {
+      case ADD_BOARD_REQUEST: {
+        draft.board = null;
+        draft.addBoardLoading = true;
+        draft.addBoardDone = false;
+        draft.addBoardError = null;
+        break;
+      }
+      case ADD_BOARD_SUCCESS: {
+        draft.boards.push(action.data);
+        draft.addBoardLoading = false;
+        draft.addBoardDone = true;
+        break;
+      }
+      case ADD_BOARD_FAILURE: {
+        draft.addBoardLoading = false;
+        draft.addBoardError = action.error;
+        break;
+      }
       case LOAD_BOARD_REQUEST: {
         draft.board = null;
         draft.loadBoardLoading = true;

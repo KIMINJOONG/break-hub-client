@@ -7,7 +7,7 @@ import Span from '../../../components/atoms/Span';
 import SideMenuList from '../../../components/oraganisms/SideMenuList';
 import { RootState } from '../../../reducers';
 import ReactPlayer from 'react-player';
-import { Board } from '../../../type/server';
+import { Board, searchTag } from '../../../type/server';
 
 const MainComponent = styled.div`
   display: flex;
@@ -71,7 +71,7 @@ const Detail = () => {
             <div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <ReactPlayer
-                  url={`https://www.youtube.com/watch?v=${board.videoLink}`}
+                  url={`https://www.youtube.com/watch?v=${board.videoUrl}`}
                   width={'100%'}
                   height={'100vh'}
                   style={{
@@ -85,8 +85,8 @@ const Detail = () => {
               <p>{board.content}</p>
             </div>
             <div>
-              {board.search.map((search: string) => (
-                <span>{`#${search}`}</span>
+              {board.searchTags.map((searchTag: searchTag) => (
+                <span>{`#${searchTag.name}`}</span>
               ))}
             </div>
           </div>

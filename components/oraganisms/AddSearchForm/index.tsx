@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSearchRequirementAction } from '../../../actions/searchRequirement/action';
+import { addSearchTagAction } from '../../../actions/searchRequirement/action';
 import { RootState } from '../../../reducers';
 import { BLUE_COLOR } from '../../../utils/theme';
 import Button from '../../atoms/Button';
@@ -12,18 +12,10 @@ const AddSearchForm = () => {
     (state: RootState) => state.searchRequirement
   );
   const [addSearchValue, setAddSearchValue] = useState('');
-  const [addSearchCode, setAddSearchCode] = useState('');
 
   const onChangeAddSearchValue = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setAddSearchValue(e.target.value);
-    },
-    []
-  );
-
-  const onChangeAddSearchCode = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setAddSearchCode(e.target.value);
     },
     []
   );
@@ -34,12 +26,11 @@ const AddSearchForm = () => {
       const data = {
         seq: searchRequirements.length + 1,
         name: addSearchValue,
-        code: addSearchCode,
-        createdAt: Date.now(),
+        createdAt: '2021-03-14',
       };
-      dispatch(addSearchRequirementAction(data));
+      dispatch(addSearchTagAction(data));
     },
-    [addSearchValue, addSearchCode]
+    [addSearchValue]
   );
 
   const onClickSearch = useCallback(
@@ -69,14 +60,6 @@ const AddSearchForm = () => {
           onChange={onChangeAddSearchValue}
           placeholder={'검색조건명을 입력해주세요.'}
         />
-        <FormItem
-          id={'addSearchCode'}
-          text={'코드'}
-          type={'text'}
-          value={addSearchCode}
-          onChange={onChangeAddSearchCode}
-          placeholder={'코드를 입력해주세요.'}
-        />
         <div style={{ width: '100%', textAlign: 'center' }}>
           <Button type={'submit'} color={BLUE_COLOR}>
             추가
@@ -87,7 +70,7 @@ const AddSearchForm = () => {
         </div>
       </form>
     );
-  }, [addSearchValue, addSearchCode]);
+  }, [addSearchValue]);
 };
 
 export default AddSearchForm;

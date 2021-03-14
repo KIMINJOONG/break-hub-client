@@ -1,15 +1,22 @@
-export type searchRequirement = {
+export type searchTag = {
   seq: number;
   name: string;
-  code: string;
   createdAt: string;
+};
+
+export type Category = {
+  seq: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  boards?: Board[];
 };
 
 export type Board = {
   seq: number;
   title: string;
   content: string;
-  videoLink: string;
-  category: number;
-  search: Array<string>;
+  videoUrl: string;
+  category: Partial<Category>;
+  searchTags: Array<searchTag>;
 };
