@@ -8,7 +8,7 @@ const Menu = ({ items }: IProps) => {
   return (
     <Ul>
       {items.map((item: any, index: number) => (
-        <Li key={index}>
+        <Li key={index} textAlign={'center'}>
           <LinkAtom href={item.href} text={item.text} />
         </Li>
       ))}

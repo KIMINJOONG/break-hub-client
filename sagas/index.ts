@@ -8,6 +8,7 @@ axios.defaults.baseURL =
     ? 'https://api.kohubi.xyz'
     : 'http://localhost:4000';
 
+axios.defaults.withCredentials = true;
 export default function* rootSaga() {
   yield all([call(searchTag), call(board)]);
 }

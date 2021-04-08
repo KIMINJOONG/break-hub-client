@@ -81,8 +81,7 @@ const AddSearchTemplate = () => {
       </div>
       <div
         style={{
-          flex: 1,
-          maxWidth: '115px',
+          width: '100%',
           border: '1px solid red',
           boxSizing: 'border-box',
         }}
@@ -91,13 +90,9 @@ const AddSearchTemplate = () => {
       </div>
       <div
         style={{
-          display: 'flex',
-          flex: 1,
-          padding: '10px',
+          width: '100%',
           border: '1px solid blue',
           boxSizing: 'border-box',
-          flexWrap: 'wrap',
-          minHeight: '100vh',
         }}
       >
         <div>

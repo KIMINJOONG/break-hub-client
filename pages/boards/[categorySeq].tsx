@@ -41,46 +41,32 @@ const CategoryBoards = () => {
       >
         <Span>헤더</Span>
       </div>
-      <div
-        style={{
-          flex: 1,
-          maxWidth: '115px',
-          border: '1px solid red',
-          boxSizing: 'border-box',
-        }}
-      >
+      <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <SideMenuList />
       </div>
       <div
         style={{
-          display: 'flex',
-          flex: 1,
-          padding: '10px',
+          width: '100%',
           border: '1px solid blue',
           boxSizing: 'border-box',
-          flexWrap: 'wrap',
-          minHeight: '100vh',
         }}
       >
-        <ul style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ textAlign: 'right' }}>
+          <span onClick={() => router.push('/boards/add')}>글쓰기</span>
+        </div>
+        <ul>
           {boards &&
             (boards.map((board: Board) => (
               <li
                 onClick={() =>
-                  router.push(`/boards/${board.category}/${board.seq}`)
+                  router.push(`/boards/${board.category.seq}/${board.seq}`)
                 }
                 style={{
-                  display: 'flex',
-                  width: '31%',
-                  flexDirection: 'column',
-                  marginBottom: '2rem',
-                  padding: '0 1rem',
                   cursor: 'pointer',
                 }}
               >
                 <figure
                   style={{
-                    minWidth: '480px',
                     height: 0,
                     paddingBottom: '60%',
                     backgroundColor: 'lightgray',

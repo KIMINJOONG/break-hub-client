@@ -1,4 +1,8 @@
-export interface IProps {
-    children? : React.ReactNode;
-    text?: string;
+export interface IProps extends IStyle {
+  children?: React.ReactNode;
+  text?: string;
+}
+
+interface IStyle {
+  textAlign?: string;
 }

@@ -1,11 +1,11 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes } from 'react';
 
 export interface IProps extends IStyle {
-    children: React.ReactNode;
-    type: any;
-    onClick?: (e:React.MouseEvent<HTMLButtonElement> ) => void;
+  children: React.ReactNode;
+  type: any;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 interface IStyle {
-    color: string;
+  color: string;
 }

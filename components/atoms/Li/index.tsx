@@ -8,10 +8,16 @@ const LiComponent = styled.li`
   margin: 10px;
   box-sizing: border-box;
   cursor: pointer;
+  text-align: ${(props: IProps) =>
+    props.textAlign ? props.textAlign : 'left'};
 `;
 
-const Li = ({ children = undefined, text }: IProps) => {
-  return <LiComponent>{children ? children : text}</LiComponent>;
+const Li = ({ children = undefined, text, textAlign = '' }: IProps) => {
+  return (
+    <LiComponent textAlign={textAlign}>
+      {children ? children : text}
+    </LiComponent>
+  );
 };
 
 export default Li;

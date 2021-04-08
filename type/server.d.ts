@@ -17,6 +17,6 @@ export type Board = {
   title: string;
   content: string;
   videoUrl: string;
-  category: Partial<Category>;
+  category: Category;
   searchTags: Array<searchTag>;
 };

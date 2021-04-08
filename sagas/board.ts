@@ -1,5 +1,5 @@
-import { all, fork, put, takeLatest, delay } from 'redux-saga/effects';
-import axios from 'axios';
+import { all, fork, put, takeLatest, delay, call } from 'redux-saga/effects';
+import axios, { AxiosResponse } from 'axios';
 import {
   ADD_BOARD_FAILURE,
   ADD_BOARD_REQUEST,
@@ -141,18 +141,17 @@ const dummyBoards: Board[] = [
     ],
   },
 ];
-function loadBoardsAPI(seq: number) {
+function loadBoardsAPI() {
   //     const token = jsCookie.get("token");
-  //   const Authorization = token ? `token=${token}` : "";
-  //   return axios.post("/addSearch", data, { headers: { Authorization } });
+  // const Authorization = token ? `token=${token}` : "";
+  return axios.get(`/boards`, { withCredentials: true });
 }
 
 function* loadBoards(action: any) {
   try {
-    //   const result = yield call(loadBoardsAPI, action.seq);
-    const result = {
-      data: dummyBoards,
-    };
+    console.log(1111111);
+    const result: AxiosResponse<any> = yield call(loadBoardsAPI);
+    console.log('result :', result);
     // yield delay(3000);
     yield put({
       // put은 dispatch 동일
@@ -172,16 +171,16 @@ function* loadBoards(action: any) {
 function loadBoardAPI(categorySeq: number, boardSeq: number) {
   //     const token = jsCookie.get("token");
   //   const Authorization = token ? `token=${token}` : "";
-  //   return axios.post("/addSearch", data, { headers: { Authorization } });
+  return axios.get(`/boards/${boardSeq}`, { withCredentials: true });
 }
 
 function* loadBoard(action: any) {
   try {
-    //   const result = yield call(loadBoardAPI, action.categorySeq, action.boardSeq);
-    const result = {
-      data: dummyBoards.find((board: Board) => board.seq === action.boardSeq),
-    };
-    // yield delay(3000);
+    const result: AxiosResponse<Board[]> = yield call(
+      loadBoardAPI,
+      action.categorySeq,
+      action.boardSeq
+    );
     yield put({
       // put은 dispatch 동일
       type: LOAD_BOARD_SUCCESS,
@@ -198,17 +197,14 @@ function* loadBoard(action: any) {
 }
 
 function addBoardAPI(data: any) {
-  //     const token = jsCookie.get("token");
-  //   const Authorization = token ? `token=${token}` : "";
-  //   return axios.post("/addSearch", data, { headers: { Authorization } });
+  // const token = jsCookie.get('token');
+  // const Authorization = token ? `token=${token}` : '';
+  return axios.post('/boards', data);
 }
 
 function* addBoard(action: any) {
   try {
-    //   const result = yield call(addBoardAPI, action.data);
-    const result = {
-      data: action.data,
-    };
+    const result: AxiosResponse<any> = yield call(addBoardAPI, action.data);
     // yield delay(3000);
     yield put({
       // put은 dispatch 동일
