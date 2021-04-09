@@ -1,5 +1,10 @@
+import { useRouter } from 'next/dist/client/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  createBoardAction,
+  updateBoardAction,
+} from '../../../actions/board/action';
 import { loadSearchTagsAction } from '../../../actions/searchTag/action';
 import { RootState } from '../../../reducers';
 import { searchTag } from '../../../type/server';
@@ -21,6 +26,7 @@ const AddBoardForm = ({
   videoUrlValue = '',
   searchTagDatas = [],
 }: IProps) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { searchTags, searchTagsDone } = useSelector(
     (state: RootState) => state.searchTag
@@ -32,7 +38,6 @@ const AddBoardForm = ({
 
   useEffect(() => {
     if (searchTagsDone) {
-      console.log(searchTagDatas);
       const tempCheckboxes: any = {};
       for (const searchtag of searchTags) {
         if (!tempCheckboxes[searchtag.seq]) {
@@ -73,9 +78,21 @@ const AddBoardForm = ({
         title,
         content,
         videoUrl,
-        searchTags,
+        searchTagSeqs: searchTags,
+        categorySeq: 1,
       };
-      console.log(data);
+      if (isUpdate) {
+        console.log(111);
+        const {
+          query: { boardSeq },
+        } = router;
+        if (boardSeq) {
+          console.log(222);
+          dispatch(updateBoardAction(parseInt(boardSeq as string, 10), data));
+        }
+      } else {
+        dispatch(createBoardAction(data));
+      }
     },
     [title, content, videoUrl, checkboxes]
   );

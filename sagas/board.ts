@@ -1,4 +1,4 @@
-import { all, fork, put, takeLatest, delay, call } from 'redux-saga/effects';
+import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios, { AxiosResponse } from 'axios';
 import {
   ADD_BOARD_FAILURE,
@@ -10,149 +10,21 @@ import {
   LOAD_BOARD_FAILURE,
   LOAD_BOARD_REQUEST,
   LOAD_BOARD_SUCCESS,
+  UPDATE_BOARD_FAILURE,
+  UPDATE_BOARD_REQUEST,
+  UPDATE_BOARD_SUCCESS,
 } from '../actions/board/type';
 import { Board } from '../type/server';
 
-const dummyBoards: Board[] = [
-  {
-    seq: 1,
-    title: '디시즈 탑셋',
-    content: '내용입니다.',
-    videoUrl: '65cQw-NG5gk',
-    category: {
-      seq: 1,
-      name: '동영상 게시판',
-      createdAt: '2021-03-15',
-      updatedAt: '2021-03-15',
-    },
-    searchTags: [
-      {
-        seq: 1,
-        name: '프리즈를 잘하는',
-        createdAt: '2021-03-15',
-      },
-      {
-        seq: 2,
-        name: '리듬을 잘타는',
-        createdAt: '2021-03-15',
-      },
-      {
-        seq: 6,
-        name: '미국',
-        createdAt: '2021-03-15',
-      },
-    ],
-  },
-  {
-    seq: 2,
-    title: '이세이 탑셋',
-    content: '내용입니다.2',
-    videoUrl: 'LJGLn-IwpN4',
-    category: {
-      seq: 1,
-      name: '동영상 게시판',
-      createdAt: '2021-03-15',
-      updatedAt: '2021-03-15',
-    },
-    searchTags: [
-      {
-        seq: 1,
-        name: '프리즈를 잘하는',
-        createdAt: '2021-03-15',
-      },
-      {
-        seq: 2,
-        name: '리듬을 잘타는',
-        createdAt: '2021-03-15',
-      },
-      {
-        seq: 3,
-        name: '비트킬러',
-        createdAt: '2021-03-15',
-      },
-      {
-        seq: 4,
-        name: '파워무브를 잘하는',
-        createdAt: '2021-03-15',
-      },
-      {
-        seq: 5,
-        name: '일본',
-        createdAt: '2021-03-15',
-      },
-    ],
-  },
-  {
-    seq: 3,
-    title: '홍텐 탑셋',
-    content: '내용입니다.3',
-    videoUrl: 'sNaXIbcbYdQ',
-    category: {
-      seq: 1,
-      name: '동영상 게시판',
-      createdAt: '2021-03-15',
-      updatedAt: '2021-03-15',
-    },
-    searchTags: [
-      {
-        seq: 1,
-        name: '프리즈를 잘하는',
-        createdAt: '2021-03-15',
-      },
-      {
-        seq: 7,
-        name: '레전드',
-        createdAt: '2021-03-15',
-      },
-      {
-        seq: 8,
-        name: '한국',
-        createdAt: '2021-03-15',
-      },
-    ],
-  },
-  {
-    seq: 4,
-    title: '알코릴 탑셋',
-    content: '내용입니다.4',
-    videoUrl: 'Otf37Rq_KHA',
-    category: {
-      seq: 1,
-      name: '동영상 게시판',
-      createdAt: '2021-03-15',
-      updatedAt: '2021-03-15',
-    },
-    searchTags: [
-      {
-        seq: 1,
-        name: '프리즈를 잘하는',
-        createdAt: '2021-03-15',
-      },
-      {
-        seq: 4,
-        name: '파워무브를 잘하는',
-        createdAt: '2021-03-15',
-      },
-      {
-        seq: 9,
-        name: '러시아',
-        createdAt: '2021-03-15',
-      },
-    ],
-  },
-];
 function loadBoardsAPI() {
   //     const token = jsCookie.get("token");
   // const Authorization = token ? `token=${token}` : "";
   return axios.get(`/boards`, { withCredentials: true });
 }
 
-function* loadBoards(action: any) {
+function* loadBoards() {
   try {
-    console.log(1111111);
     const result: AxiosResponse<any> = yield call(loadBoardsAPI);
-    console.log('result :', result);
-    // yield delay(3000);
     yield put({
       // put은 dispatch 동일
       type: LOAD_BOARDS_SUCCESS,
@@ -168,7 +40,7 @@ function* loadBoards(action: any) {
   }
 }
 
-function loadBoardAPI(categorySeq: number, boardSeq: number) {
+function loadBoardAPI(boardSeq: number) {
   //     const token = jsCookie.get("token");
   //   const Authorization = token ? `token=${token}` : "";
   return axios.get(`/boards/${boardSeq}`, { withCredentials: true });
@@ -178,7 +50,6 @@ function* loadBoard(action: any) {
   try {
     const result: AxiosResponse<Board[]> = yield call(
       loadBoardAPI,
-      action.categorySeq,
       action.boardSeq
     );
     yield put({
@@ -221,6 +92,36 @@ function* addBoard(action: any) {
   }
 }
 
+function updateBoardAPI(seq: number, data: any) {
+  // const token = jsCookie.get('token');
+  // const Authorization = token ? `token=${token}` : '';
+  console.log(34444);
+  return axios.patch(`/boards/${seq}`, data);
+}
+
+function* updateBoard(action: any) {
+  try {
+    console.log(3333);
+    const result: AxiosResponse<any> = yield call(
+      updateBoardAPI,
+      action.seq,
+      action.data
+    );
+    yield put({
+      // put은 dispatch 동일
+      type: UPDATE_BOARD_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.log(e);
+    // loginAPI 실패
+    yield put({
+      type: UPDATE_BOARD_FAILURE,
+      error: e.response.data,
+    });
+  }
+}
+
 function* watchLoadBoards() {
   yield takeLatest(LOAD_BOARDS_REQUEST, loadBoards);
 }
@@ -233,6 +134,16 @@ function* watchAddBoard() {
   yield takeLatest(ADD_BOARD_REQUEST, addBoard);
 }
 
+function* watchUpdateBoard() {
+  console.log(555);
+  yield takeLatest(UPDATE_BOARD_REQUEST, updateBoard);
+}
+
 export default function* boardSaga() {
-  yield all([fork(watchLoadBoards), fork(watchLoadBoard), fork(watchAddBoard)]);
+  yield all([
+    fork(watchLoadBoards),
+    fork(watchLoadBoard),
+    fork(watchAddBoard),
+    fork(watchUpdateBoard),
+  ]);
 }

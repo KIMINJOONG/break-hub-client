@@ -10,6 +10,9 @@ import {
   LOAD_BOARD_FAILURE,
   LOAD_BOARD_REQUEST,
   LOAD_BOARD_SUCCESS,
+  UPDATE_BOARD_FAILURE,
+  UPDATE_BOARD_REQUEST,
+  UPDATE_BOARD_SUCCESS,
 } from '../actions/board/type';
 import { Board } from '../type/server';
 
@@ -26,11 +29,33 @@ export const initialState = {
   addBoardLoading: false,
   addBoardDone: false,
   addBoardError: null as any,
+  updateBoard: null as Board | null,
+  updateBoardLoading: false,
+  updateBoardDone: false,
+  updateBoardError: null as any,
 };
 
 const reducer = (state = initialState, action: boardActionType) => {
   return produce(state, (draft) => {
     switch (action.type) {
+      case UPDATE_BOARD_REQUEST: {
+        console.log('request');
+        draft.board = null;
+        draft.updateBoardLoading = true;
+        draft.updateBoardDone = false;
+        draft.updateBoardError = null;
+        break;
+      }
+      case UPDATE_BOARD_SUCCESS: {
+        draft.updateBoardLoading = false;
+        draft.updateBoardDone = true;
+        break;
+      }
+      case UPDATE_BOARD_FAILURE: {
+        draft.updateBoardLoading = false;
+        draft.updateBoardError = action.error;
+        break;
+      }
       case ADD_BOARD_REQUEST: {
         draft.board = null;
         draft.addBoardLoading = true;

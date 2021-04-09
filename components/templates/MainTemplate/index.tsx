@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Span from '../../atoms/Span';
 import SideMenuList from '../../oraganisms/SideMenuList';
 import axios from 'axios';
-import wrapper from '../../../stores/configureStore';
 import { LOAD_BOARDS_REQUEST } from '../../../actions/board/type';
 import { END } from 'redux-saga';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +10,7 @@ import { RootState } from '../../../reducers';
 import { loadBoardsAction } from '../../../actions/board/action';
 import { Board, searchTag } from '../../../type/server';
 import { useRouter } from 'next/dist/client/router';
+import wrapper from '../../../stores/configureStore';
 
 const MainComponent = styled.div`
   display: flex;

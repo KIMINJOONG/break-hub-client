@@ -1,5 +1,5 @@
-import { all, fork, put, takeLatest, delay } from 'redux-saga/effects';
-import axios from 'axios';
+import { all, fork, put, takeLatest, delay, call } from 'redux-saga/effects';
+import axios, { AxiosResponse } from 'axios';
 import {
   ADD_SEARCH_TAG_FAILURE,
   ADD_SEARCH_TAG_REQUEST,
@@ -37,15 +37,12 @@ const dummyData = [
 ];
 
 function loadSearchTagAPI() {
-  return;
+  return axios.get(`/searchTags`, { withCredentials: true });
 }
 
 function* loadSearchTag(action: any) {
   try {
-    //   const result = yield call(loadSearchTagAPI);
-    const result = {
-      data: dummyData,
-    };
+    const result: AxiosResponse<any> = yield call(loadSearchTagAPI);
     yield delay(1000);
     yield put({
       // put은 dispatch 동일
@@ -65,16 +62,12 @@ function* loadSearchTag(action: any) {
 function addSearchTagAPI(data: any) {
   //     const token = jsCookie.get("token");
   //   const Authorization = token ? `token=${token}` : "";
-  //   return axios.post("/addSearch", data, { headers: { Authorization } });
+  return axios.post('/searchTags', data);
 }
 
 function* addSearchTag(action: any) {
   try {
-    //   const result = yield call(addSearchTagAPI, action.data);
-    const result = {
-      data: action.data,
-    };
-    // yield delay(3000);
+    const result: AxiosResponse<any> = yield call(addSearchTagAPI, action.data);
     yield put({
       // put은 dispatch 동일
       type: ADD_SEARCH_TAG_SUCCESS,
@@ -93,16 +86,16 @@ function* addSearchTag(action: any) {
 function updateSearchTagAPI(seq: number, data: any) {
   //     const token = jsCookie.get("token");
   //   const Authorization = token ? `token=${token}` : "";
-  //   return axios.post("/addSearch", data, { headers: { Authorization } });
+  return axios.put(`/searchTags/${seq}`, data);
 }
 
 function* updateSearchTag(action: any) {
   try {
-    //   const result = yield call(updateSearchTagAPI, action.seq, action.data);
-    const result = {
-      data: action.data,
-    };
-    // yield delay(3000);
+    const result: AxiosResponse<any> = yield call(
+      updateSearchTagAPI,
+      action.seq,
+      action.data
+    );
     yield put({
       // put은 dispatch 동일
       type: UPDATE_SEARCH_TAG_SUCCESS,
@@ -120,18 +113,15 @@ function* updateSearchTag(action: any) {
 function removeSearchTagAPI(seq: number) {
   //     const token = jsCookie.get("token");
   //   const Authorization = token ? `token=${token}` : "";
-  //   return axios.post("/addSearch", data, { headers: { Authorization } });
+  return axios.delete(`/searchTags/${seq}`);
 }
 
 function* removeSearchTag(action: any) {
   try {
-    //   const result = yield call(removeSearchTag, action.seq);
-    const result = {
-      data: {
-        seq: action.seq,
-      },
-    };
-    // yield delay(3000);
+    const result: AxiosResponse<any> = yield call(
+      removeSearchTagAPI,
+      action.seq
+    );
     yield put({
       // put은 dispatch 동일
       type: REMOVE_SEARCH_TAG_SUCCESS,

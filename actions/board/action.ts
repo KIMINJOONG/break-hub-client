@@ -2,6 +2,7 @@ import {
   ADD_BOARD_REQUEST,
   LOAD_BOARDS_REQUEST,
   LOAD_BOARD_REQUEST,
+  UPDATE_BOARD_REQUEST,
 } from './type';
 
 export const loadBoardsAction = () => ({
@@ -16,5 +17,11 @@ export const loadBoardAction = (categorySeq: number, boardSeq: number) => ({
 
 export const createBoardAction = (data: any) => ({
   type: ADD_BOARD_REQUEST,
+  data,
+});
+
+export const updateBoardAction = (seq: number, data: any) => ({
+  type: UPDATE_BOARD_REQUEST,
+  seq,
   data,
 });

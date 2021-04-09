@@ -44,7 +44,8 @@ const AddSearchTemplate = () => {
         name: searchTags[targetIndex].name,
         createdAt: '',
       };
-      dispatch(updateSearchTagAction(seq, data));
+
+      // dispatch(updateSearchTagAction(seq, data));
     },
     [searchTags]
   );

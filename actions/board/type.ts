@@ -10,6 +10,10 @@ export const ADD_BOARD_REQUEST = 'ADD_BOARD_REQUEST';
 export const ADD_BOARD_SUCCESS = 'ADD_BOARD_SUCCESS';
 export const ADD_BOARD_FAILURE = 'ADD_BOARD_FAILURE';
 
+export const UPDATE_BOARD_REQUEST = 'UPDATE_BOARD_REQUEST';
+export const UPDATE_BOARD_SUCCESS = 'UPDATE_BOARD_SUCCESS';
+export const UPDATE_BOARD_FAILURE = 'UPDATE_BOARD_FAILURE';
+
 interface ILOAD_BOARDS_REQUEST {
   type: typeof LOAD_BOARDS_REQUEST;
 }
@@ -49,6 +53,20 @@ interface IADD_BOARD_FAILURE {
   error: Error;
 }
 
+interface IUPDATE_BOARD_REQUEST {
+  type: typeof UPDATE_BOARD_REQUEST;
+  data: any;
+}
+interface IUPDATE_BOARD_SUCCESS {
+  type: typeof UPDATE_BOARD_SUCCESS;
+  seq: number;
+  data: any;
+}
+interface IUPDATE_BOARD_FAILURE {
+  type: typeof UPDATE_BOARD_FAILURE;
+  error: Error;
+}
+
 export type boardActionType =
   | ILOAD_BOARDS_REQUEST
   | ILOAD_BOARDS_SUCCESS
@@ -58,4 +76,7 @@ export type boardActionType =
   | ILOAD_BOARD_FAILURE
   | IADD_BOARD_REQUEST
   | IADD_BOARD_SUCCESS
-  | IADD_BOARD_FAILURE;
+  | IADD_BOARD_FAILURE
+  | IUPDATE_BOARD_REQUEST
+  | IUPDATE_BOARD_SUCCESS
+  | IUPDATE_BOARD_FAILURE;

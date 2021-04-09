@@ -30,7 +30,7 @@ const AddBoard = () => {
         <SideMenuList />
       </div>
       <div>
-        <AddBoardForm />
+        <AddBoardForm setIsUpdate={() => null} />
       </div>
     </MainComponent>
   );
