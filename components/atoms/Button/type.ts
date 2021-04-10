@@ -1,5 +1,3 @@
-import { ButtonHTMLAttributes } from 'react';
-
 export interface IProps extends IStyle {
   children: React.ReactNode;
   type: any;
