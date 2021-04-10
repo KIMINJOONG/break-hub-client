@@ -77,7 +77,7 @@ const Detail = () => {
                   <ReactPlayer
                     url={`https://www.youtube.com/watch?v=${board.videoUrl}`}
                     width={'100%'}
-                    height={'100vh'}
+                    height={'auto'}
                     style={{
                       flex: 1,
                       minWidth: '183px',
