@@ -1,7 +1,7 @@
-import React from "react";
-import Head from "next/head";
-import wrapper from "../stores/configureStore";
-import "../styles/index.css";
+import React from 'react';
+import Head from 'next/head';
+import wrapper from '../stores/configureStore';
+import '../styles/index.css';
 
 const MyBlog: any = ({ Component }: any) => {
   return (
