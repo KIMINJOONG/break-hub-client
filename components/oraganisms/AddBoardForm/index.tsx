@@ -7,7 +7,8 @@ import {
 } from '../../../actions/board/action';
 import { loadSearchTagsAction } from '../../../actions/searchTag/action';
 import { RootState } from '../../../reducers';
-import { searchTag } from '../../../type/server';
+import { BasicResponse } from '../../../type/basicResponse';
+import { Board, searchTag } from '../../../type/server';
 import { BLUE_COLOR, RED_COLOR } from '../../../utils/theme';
 import Button from '../../atoms/Button';
 import FormItem from '../../molecules/FormItem';
@@ -31,10 +32,24 @@ const AddBoardForm = ({
   const { searchTags, searchTagsDone } = useSelector(
     (state: RootState) => state.searchTag
   );
+  const addBoard: BasicResponse<Board> = useSelector(
+    (statet: RootState) => statet.board.addBoard
+  );
+
+  const { addBoardDone } = useSelector((state: RootState) => state.board);
 
   useEffect(() => {
     dispatch(loadSearchTagsAction());
   }, []);
+
+  useEffect(() => {
+    if (addBoardDone) {
+      void router.push(
+        `/boards/${addBoard.data.category.seq}/${addBoard.data.seq}`
+      );
+      alert(addBoard.message);
+    }
+  }, [addBoardDone, router]);
 
   useEffect(() => {
     if (searchTagsDone) {

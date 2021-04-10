@@ -14,6 +14,7 @@ import {
   UPDATE_BOARD_REQUEST,
   UPDATE_BOARD_SUCCESS,
 } from '../actions/board/type';
+import { BasicResponse } from '../type/basicResponse';
 import { Board } from '../type/server';
 
 export const initialState = {
@@ -25,7 +26,7 @@ export const initialState = {
   loadBoardLoading: false,
   loadBoardDone: false,
   loadBoardError: null as any,
-  addBoard: null as Board | null,
+  addBoard: null as BasicResponse<Board> | null,
   addBoardLoading: false,
   addBoardDone: false,
   addBoardError: null as any,
@@ -63,7 +64,8 @@ const reducer = (state = initialState, action: boardActionType) => {
         break;
       }
       case ADD_BOARD_SUCCESS: {
-        draft.boards.push(action.data);
+        draft.boards.push(action.data.data);
+        draft.addBoard = action.data;
         draft.addBoardLoading = false;
         draft.addBoardDone = true;
         break;

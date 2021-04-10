@@ -1,5 +1,5 @@
 import { BasicResponse } from '../../type/basicResponse';
-import { searchTag } from '../../type/server';
+import { Board, searchTag } from '../../type/server';
 
 export const LOAD_BOARDS_REQUEST = 'LOAD_BOARDS_REQUEST';
 export const LOAD_BOARDS_SUCCESS = 'LOAD_BOARDS_SUCCESS';
@@ -49,7 +49,7 @@ interface IADD_BOARD_REQUEST {
 }
 interface IADD_BOARD_SUCCESS {
   type: typeof ADD_BOARD_SUCCESS;
-  data: any;
+  data: BasicResponse<Board>;
 }
 interface IADD_BOARD_FAILURE {
   type: typeof ADD_BOARD_FAILURE;
