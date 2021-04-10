@@ -86,7 +86,7 @@ function* addSearchTag(action: any) {
 function updateSearchTagAPI(seq: number, data: any) {
   //     const token = jsCookie.get("token");
   //   const Authorization = token ? `token=${token}` : "";
-  return axios.put(`/searchTags/${seq}`, data);
+  return axios.patch(`/searchTags/${seq}`, data);
 }
 
 function* updateSearchTag(action: any) {

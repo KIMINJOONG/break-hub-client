@@ -82,12 +82,10 @@ const AddBoardForm = ({
         categorySeq: 1,
       };
       if (isUpdate) {
-        console.log(111);
         const {
           query: { boardSeq },
         } = router;
         if (boardSeq) {
-          console.log(222);
           dispatch(updateBoardAction(parseInt(boardSeq as string, 10), data));
         }
       } else {

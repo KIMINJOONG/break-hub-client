@@ -1,3 +1,6 @@
+import { BasicResponse } from '../../type/basicResponse';
+import { searchTag } from '../../type/server';
+
 export const LOAD_BOARDS_REQUEST = 'LOAD_BOARDS_REQUEST';
 export const LOAD_BOARDS_SUCCESS = 'LOAD_BOARDS_SUCCESS';
 export const LOAD_BOARDS_FAILURE = 'LOAD_BOARDS_FAILURE';
@@ -60,7 +63,7 @@ interface IUPDATE_BOARD_REQUEST {
 interface IUPDATE_BOARD_SUCCESS {
   type: typeof UPDATE_BOARD_SUCCESS;
   seq: number;
-  data: any;
+  data: BasicResponse<searchTag>;
 }
 interface IUPDATE_BOARD_FAILURE {
   type: typeof UPDATE_BOARD_FAILURE;

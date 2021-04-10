@@ -15,6 +15,7 @@ import {
   LOAD_SEARCH_TAGS_FAILURE,
   LOAD_SEARCH_TAGS_REQUEST,
 } from '../actions/searchTag/type';
+import { BasicResponse } from '../type/basicResponse';
 import { searchTag } from '../type/server';
 
 export const initialState = {
@@ -26,13 +27,14 @@ export const initialState = {
   addSearchTagLoading: false,
   addSearchTagDone: false,
   addSearchTagError: null as any,
-  updateSearchTag: null,
+  updateSearchTag: null as null | BasicResponse<searchTag>,
   updateSearchTagLoading: false,
   updateSearchTagDone: false,
   updateSearchTagError: null as any,
-  removeSearchTag: null,
+  removeSearchTag: null as null | BasicResponse<searchTag>,
   removeSearchTagLoading: false,
   removeSearchTagDone: false,
+  removeSearchTagMessage: '',
   removeSearchTagError: null as any,
 };
 
@@ -58,9 +60,10 @@ const reducer = (state = initialState, action: SearchTagActionType) => {
       }
       case UPDATE_SEARCH_TAG_SUCCESS: {
         const updateIndex = draft.searchTags.findIndex(
-          (item: searchTag) => action.data.seq === item.seq
+          (item: searchTag) => action.data.data.seq === item.seq
         );
-        draft.searchTags[updateIndex] = action.data;
+        draft.searchTags[updateIndex] = action.data.data;
+        draft.updateSearchTag = action.data;
         draft.updateSearchTagLoading = false;
         draft.updateSearchTagDone = true;
         draft.updateSearchTagError = null;
@@ -81,9 +84,10 @@ const reducer = (state = initialState, action: SearchTagActionType) => {
         break;
       }
       case REMOVE_SEARCH_TAG_SUCCESS: {
-        draft.searchTags = draft.searchTags.filter(
-          (item: searchTag) => item.seq !== action.data.seq
+        draft.searchTags = state.searchTags.filter(
+          (searchTag: searchTag) => searchTag.seq !== action.data.data.seq
         );
+        draft.removeSearchTag = action.data;
         draft.removeSearchTagLoading = false;
         draft.removeSearchTagDone = true;
         draft.removeSearchTagError = null;

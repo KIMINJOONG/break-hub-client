@@ -1,3 +1,4 @@
+import { BasicResponse } from '../../type/basicResponse';
 import { searchTag } from '../../type/server';
 
 export const LOAD_SEARCH_TAGS_REQUEST = 'LOAD_SEARCH_TAGS_REQUEST';
@@ -52,7 +53,7 @@ interface IUPDATE_SEARCH_TAG_REQUEST {
 interface IUPDATE_SEARCH_TAG_SUCCESS {
   type: typeof UPDATE_SEARCH_TAG_SUCCESS;
   seq: number;
-  data: searchTag;
+  data: BasicResponse<searchTag>;
 }
 
 interface IUPDATE_SEARCH_TAG_FAILURE {
@@ -65,7 +66,7 @@ interface IREMOVE_SEARCH_TAG_REQUEST {
 
 interface IREMOVE_SEARCH_TAG_SUCCESS {
   type: typeof REMOVE_SEARCH_TAG_SUCCESS;
-  data: searchTag;
+  data: BasicResponse<searchTag>;
 }
 
 interface IREMOVE_SEARCH_TAG_FAILURE {

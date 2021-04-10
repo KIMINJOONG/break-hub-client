@@ -1,7 +1,7 @@
 export type searchTag = {
   seq: number;
   name: string;
-  createdAt: string;
+  createdAt?: string;
 };
 
 export type Category = {

@@ -95,13 +95,11 @@ function* addBoard(action: any) {
 function updateBoardAPI(seq: number, data: any) {
   // const token = jsCookie.get('token');
   // const Authorization = token ? `token=${token}` : '';
-  console.log(34444);
   return axios.patch(`/boards/${seq}`, data);
 }
 
 function* updateBoard(action: any) {
   try {
-    console.log(3333);
     const result: AxiosResponse<any> = yield call(
       updateBoardAPI,
       action.seq,
@@ -135,7 +133,6 @@ function* watchAddBoard() {
 }
 
 function* watchUpdateBoard() {
-  console.log(555);
   yield takeLatest(UPDATE_BOARD_REQUEST, updateBoard);
 }
 

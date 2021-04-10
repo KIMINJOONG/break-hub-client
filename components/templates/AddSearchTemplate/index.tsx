@@ -12,6 +12,7 @@ import {
 import { LOAD_SEARCH_TAGS_REQUEST } from '../../../actions/searchTag/type';
 import { RootState } from '../../../reducers';
 import wrapper from '../../../stores/configureStore';
+import { BasicResponse } from '../../../type/basicResponse';
 import { searchTag } from '../../../type/server';
 import { BLUE_COLOR, RED_COLOR } from '../../../utils/theme';
 import Button from '../../atoms/Button';
@@ -27,11 +28,29 @@ const AddSearchComponent = styled.div`
 
 const AddSearchTemplate = () => {
   const dispatch = useDispatch();
-  const { searchTags } = useSelector((state: RootState) => state.searchTag);
+  const {
+    searchTags,
+    removeSearchTag,
+    removeSearchTagDone,
+    updateSearchTag,
+    updateSearchTagDone,
+  } = useSelector((state: RootState) => state.searchTag);
 
   useEffect(() => {
     dispatch(loadSearchTagsAction());
   }, []);
+
+  useEffect(() => {
+    if (removeSearchTagDone) {
+      alert(removeSearchTag.message);
+    }
+  }, [removeSearchTagDone]);
+
+  useEffect(() => {
+    if (updateSearchTagDone) {
+      alert(updateSearchTag.message);
+    }
+  }, [updateSearchTagDone]);
 
   const onClickUpdate = useCallback(
     (seq: number) => {
@@ -42,10 +61,9 @@ const AddSearchTemplate = () => {
       const data: searchTag = {
         seq: searchTags[targetIndex].seq,
         name: searchTags[targetIndex].name,
-        createdAt: '',
       };
 
-      // dispatch(updateSearchTagAction(seq, data));
+      dispatch(updateSearchTagAction(seq, data));
     },
     [searchTags]
   );

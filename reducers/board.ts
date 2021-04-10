@@ -39,7 +39,6 @@ const reducer = (state = initialState, action: boardActionType) => {
   return produce(state, (draft) => {
     switch (action.type) {
       case UPDATE_BOARD_REQUEST: {
-        console.log('request');
         draft.board = null;
         draft.updateBoardLoading = true;
         draft.updateBoardDone = false;

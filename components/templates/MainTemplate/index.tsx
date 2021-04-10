@@ -2,9 +2,6 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Span from '../../atoms/Span';
 import SideMenuList from '../../oraganisms/SideMenuList';
-import axios from 'axios';
-import { LOAD_BOARDS_REQUEST } from '../../../actions/board/type';
-import { END } from 'redux-saga';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../reducers';
 import { loadBoardsAction } from '../../../actions/board/action';
@@ -82,7 +79,7 @@ const MainTemplate = () => {
                 (boards.map((board: Board) => (
                   <tr
                     onClick={() =>
-                      router.push(`/board/${board.category}/${board.seq}`)
+                      router.push(`/boards/${board.category.seq}/${board.seq}`)
                     }
                     key={board.seq}
                     style={{ border: '1px solid black', padding: '10px' }}
