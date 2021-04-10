@@ -12,7 +12,6 @@ import {
 import { LOAD_SEARCH_TAGS_REQUEST } from '../../../actions/searchTag/type';
 import { RootState } from '../../../reducers';
 import wrapper from '../../../stores/configureStore';
-import { BasicResponse } from '../../../type/basicResponse';
 import { searchTag } from '../../../type/server';
 import { BLUE_COLOR, RED_COLOR } from '../../../utils/theme';
 import Button from '../../atoms/Button';

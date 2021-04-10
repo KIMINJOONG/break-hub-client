@@ -1,7 +1,6 @@
 import React from 'react';
-import { IProps } from './type';
 
-const CardItem = ({ type }: IProps) => {
+const CardItem = () => {
   return <li style={{ width: '50%', padding: '0 1rem' }}></li>;
 };
 

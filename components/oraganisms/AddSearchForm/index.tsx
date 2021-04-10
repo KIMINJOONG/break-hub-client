@@ -33,6 +33,7 @@ const AddSearchForm = () => {
 
   const onClickSearch = useCallback(
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      console.log(e);
       null;
     },
     []

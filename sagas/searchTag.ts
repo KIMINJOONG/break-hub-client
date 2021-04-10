@@ -15,32 +15,11 @@ import {
   UPDATE_SEARCH_TAG_SUCCESS,
 } from '../actions/searchTag/type';
 
-const dummyData = [
-  {
-    seq: 1,
-    name: '에너지있는',
-    code: '001',
-    createdAt: '2020-01-27',
-  },
-  {
-    seq: 2,
-    name: '유연한',
-    code: '002',
-    createdAt: '2020-01-27',
-  },
-  {
-    seq: 3,
-    name: '파워무브',
-    code: '003',
-    createdAt: '2020-01-27',
-  },
-];
-
 function loadSearchTagAPI() {
   return axios.get(`/searchTags`, { withCredentials: true });
 }
 
-function* loadSearchTag(action: any) {
+function* loadSearchTag() {
   try {
     const result: AxiosResponse<any> = yield call(loadSearchTagAPI);
     yield delay(1000);
