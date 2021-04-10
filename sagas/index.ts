@@ -5,7 +5,7 @@ import board from './board';
 
 axios.defaults.baseURL =
   process.env.NODE_ENV === 'production'
-    ? 'https://api.kohubi.xyz'
+    ? 'http://3.112.197.185:4000/'
     : 'http://localhost:4000';
 
 axios.defaults.withCredentials = true;
