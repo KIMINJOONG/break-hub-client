@@ -36,7 +36,13 @@ const AddBoardForm = ({
     (statet: RootState) => statet.board.addBoard
   );
 
-  const { addBoardDone } = useSelector((state: RootState) => state.board);
+  const updateBoard: BasicResponse<Board> = useSelector(
+    (statet: RootState) => statet.board.updateBoard
+  );
+
+  const { addBoardDone, updateBoardDone } = useSelector(
+    (state: RootState) => state.board
+  );
 
   useEffect(() => {
     dispatch(loadSearchTagsAction());
@@ -50,6 +56,15 @@ const AddBoardForm = ({
       alert(addBoard.message);
     }
   }, [addBoardDone, router]);
+
+  useEffect(() => {
+    if (updateBoardDone) {
+      alert(updateBoard.message);
+      void router.push(
+        `/boards/${updateBoard.data.category.seq}/${updateBoard.data.seq}`
+      );
+    }
+  }, [updateBoardDone]);
 
   useEffect(() => {
     if (searchTagsDone) {

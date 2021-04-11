@@ -10,6 +10,9 @@ import {
   LOAD_BOARD_FAILURE,
   LOAD_BOARD_REQUEST,
   LOAD_BOARD_SUCCESS,
+  REMOVE_BOARD_FAILURE,
+  REMOVE_BOARD_REQUEST,
+  REMOVE_BOARD_SUCCESS,
   UPDATE_BOARD_FAILURE,
   UPDATE_BOARD_REQUEST,
   UPDATE_BOARD_SUCCESS,
@@ -30,23 +33,45 @@ export const initialState = {
   addBoardLoading: false,
   addBoardDone: false,
   addBoardError: null as any,
-  updateBoard: null as Board | null,
+  updateBoard: null as BasicResponse<Board> | null,
   updateBoardLoading: false,
   updateBoardDone: false,
   updateBoardError: null as any,
+  removeBoard: null as BasicResponse<Board> | null,
+  removeBoardLoading: false,
+  removeBoardDone: false,
+  removeBoardError: null as any,
 };
 
 const reducer = (state = initialState, action: boardActionType) => {
   return produce(state, (draft) => {
     switch (action.type) {
+      case REMOVE_BOARD_REQUEST: {
+        draft.removeBoardLoading = true;
+        draft.removeBoardDone = false;
+        draft.removeBoardError = null;
+        break;
+      }
+      case REMOVE_BOARD_SUCCESS: {
+        draft.removeBoard = action.data;
+        draft.removeBoardLoading = false;
+        draft.removeBoardDone = true;
+        break;
+      }
+      case REMOVE_BOARD_FAILURE: {
+        draft.removeBoardLoading = false;
+        draft.removeBoardError = action.error;
+        break;
+      }
       case UPDATE_BOARD_REQUEST: {
-        draft.board = null;
         draft.updateBoardLoading = true;
         draft.updateBoardDone = false;
         draft.updateBoardError = null;
         break;
       }
       case UPDATE_BOARD_SUCCESS: {
+        draft.board = action.data.data;
+        draft.updateBoard = action.data;
         draft.updateBoardLoading = false;
         draft.updateBoardDone = true;
         break;

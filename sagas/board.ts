@@ -10,6 +10,9 @@ import {
   LOAD_BOARD_FAILURE,
   LOAD_BOARD_REQUEST,
   LOAD_BOARD_SUCCESS,
+  REMOVE_BOARD_FAILURE,
+  REMOVE_BOARD_REQUEST,
+  REMOVE_BOARD_SUCCESS,
   UPDATE_BOARD_FAILURE,
   UPDATE_BOARD_REQUEST,
   UPDATE_BOARD_SUCCESS,
@@ -120,6 +123,30 @@ function* updateBoard(action: any) {
   }
 }
 
+function removeBoardAPI(seq: number) {
+  // const token = jsCookie.get('token');
+  // const Authorization = token ? `token=${token}` : '';
+  return axios.delete(`/boards/${seq}`);
+}
+
+function* removeBoard(action: any) {
+  try {
+    const result: AxiosResponse<any> = yield call(removeBoardAPI, action.seq);
+    yield put({
+      // put은 dispatch 동일
+      type: REMOVE_BOARD_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.log(e);
+    // loginAPI 실패
+    yield put({
+      type: REMOVE_BOARD_FAILURE,
+      error: e.response.data,
+    });
+  }
+}
+
 function* watchLoadBoards() {
   yield takeLatest(LOAD_BOARDS_REQUEST, loadBoards);
 }
@@ -136,11 +163,16 @@ function* watchUpdateBoard() {
   yield takeLatest(UPDATE_BOARD_REQUEST, updateBoard);
 }
 
+function* watchRemoveBoard() {
+  yield takeLatest(REMOVE_BOARD_REQUEST, removeBoard);
+}
+
 export default function* boardSaga() {
   yield all([
     fork(watchLoadBoards),
     fork(watchLoadBoard),
     fork(watchAddBoard),
     fork(watchUpdateBoard),
+    fork(watchRemoveBoard),
   ]);
 }

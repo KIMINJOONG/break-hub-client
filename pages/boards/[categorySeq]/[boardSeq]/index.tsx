@@ -1,8 +1,11 @@
 import { useRouter } from 'next/dist/client/router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { loadBoardAction } from '../../../../actions/board/action';
+import {
+  loadBoardAction,
+  removeBoardAction,
+} from '../../../../actions/board/action';
 import Span from '../../../../components/atoms/Span';
 import SideMenuList from '../../../../components/oraganisms/SideMenuList';
 import { RootState } from '../../../../reducers';
@@ -11,6 +14,7 @@ import { Board, searchTag } from '../../../../type/server';
 import AddBoardForm from '../../../../components/oraganisms/AddBoardForm';
 import Button from '../../../../components/atoms/Button';
 import { BLUE_COLOR, RED_COLOR } from '../../../../utils/theme';
+import { BasicResponse } from '../../../../type/basicResponse';
 
 const MainComponent = styled.div`
   display: flex;
@@ -23,6 +27,10 @@ const Detail = () => {
   const { categorySeq, boardSeq } = router.query;
   const [isUpdate, setIsUpdate] = useState(false);
   const board: Board = useSelector((statet: RootState) => statet.board.board);
+  const { removeBoardDone } = useSelector((state: RootState) => state.board);
+  const removeBoard: BasicResponse<Board> = useSelector(
+    (statet: RootState) => statet.board.removeBoard
+  );
 
   useEffect(() => {
     dispatch(
@@ -32,6 +40,17 @@ const Detail = () => {
       )
     );
   }, [categorySeq, boardSeq]);
+
+  useEffect(() => {
+    if (removeBoardDone) {
+      alert(removeBoard.message);
+      void router.push('/boards/1');
+    }
+  }, [removeBoardDone]);
+
+  const remove = useCallback(() => {
+    dispatch(removeBoardAction(board.seq));
+  }, [board]);
   return (
     <MainComponent>
       <div
@@ -101,11 +120,7 @@ const Detail = () => {
                 >
                   수정
                 </Button>
-                <Button
-                  color={RED_COLOR}
-                  type={'button'}
-                  onClick={() => setIsUpdate(true)}
-                >
+                <Button color={RED_COLOR} type={'button'} onClick={remove}>
                   삭제
                 </Button>
               </div>

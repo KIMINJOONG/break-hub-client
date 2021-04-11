@@ -1,5 +1,5 @@
 import { BasicResponse } from '../../type/basicResponse';
-import { Board, searchTag } from '../../type/server';
+import { Board } from '../../type/server';
 
 export const LOAD_BOARDS_REQUEST = 'LOAD_BOARDS_REQUEST';
 export const LOAD_BOARDS_SUCCESS = 'LOAD_BOARDS_SUCCESS';
@@ -16,6 +16,10 @@ export const ADD_BOARD_FAILURE = 'ADD_BOARD_FAILURE';
 export const UPDATE_BOARD_REQUEST = 'UPDATE_BOARD_REQUEST';
 export const UPDATE_BOARD_SUCCESS = 'UPDATE_BOARD_SUCCESS';
 export const UPDATE_BOARD_FAILURE = 'UPDATE_BOARD_FAILURE';
+
+export const REMOVE_BOARD_REQUEST = 'REMOVE_BOARD_REQUEST';
+export const REMOVE_BOARD_SUCCESS = 'REMOVE_BOARD_SUCCESS';
+export const REMOVE_BOARD_FAILURE = 'REMOVE_BOARD_FAILURE';
 
 interface ILOAD_BOARDS_REQUEST {
   type: typeof LOAD_BOARDS_REQUEST;
@@ -62,11 +66,23 @@ interface IUPDATE_BOARD_REQUEST {
 }
 interface IUPDATE_BOARD_SUCCESS {
   type: typeof UPDATE_BOARD_SUCCESS;
-  seq: number;
-  data: BasicResponse<searchTag>;
+  data: BasicResponse<Board>;
 }
 interface IUPDATE_BOARD_FAILURE {
   type: typeof UPDATE_BOARD_FAILURE;
+  error: Error;
+}
+
+interface IREMOVE_BOARD_REQUEST {
+  type: typeof REMOVE_BOARD_REQUEST;
+  seq: number;
+}
+interface IREMOVE_BOARD_SUCCESS {
+  type: typeof REMOVE_BOARD_SUCCESS;
+  data: BasicResponse<Board>;
+}
+interface IREMOVE_BOARD_FAILURE {
+  type: typeof REMOVE_BOARD_FAILURE;
   error: Error;
 }
 
@@ -82,4 +98,7 @@ export type boardActionType =
   | IADD_BOARD_FAILURE
   | IUPDATE_BOARD_REQUEST
   | IUPDATE_BOARD_SUCCESS
-  | IUPDATE_BOARD_FAILURE;
+  | IUPDATE_BOARD_FAILURE
+  | IREMOVE_BOARD_REQUEST
+  | IREMOVE_BOARD_SUCCESS
+  | IREMOVE_BOARD_FAILURE;

@@ -2,6 +2,7 @@ import {
   ADD_BOARD_REQUEST,
   LOAD_BOARDS_REQUEST,
   LOAD_BOARD_REQUEST,
+  REMOVE_BOARD_REQUEST,
   UPDATE_BOARD_REQUEST,
 } from './type';
 
@@ -24,4 +25,9 @@ export const updateBoardAction = (seq: number, data: any) => ({
   type: UPDATE_BOARD_REQUEST,
   seq,
   data,
+});
+
+export const removeBoardAction = (seq: number) => ({
+  type: REMOVE_BOARD_REQUEST,
+  seq,
 });
