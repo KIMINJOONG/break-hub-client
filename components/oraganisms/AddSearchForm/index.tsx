@@ -1,14 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addSearchTagAction } from '../../../actions/searchTag/action';
-import { RootState } from '../../../reducers';
 import { BLUE_COLOR } from '../../../utils/theme';
 import Button from '../../atoms/Button';
 import FormItem from '../../molecules/FormItem';
 
 const AddSearchForm = () => {
   const dispatch = useDispatch();
-  const { searchTags } = useSelector((state: RootState) => state.searchTag);
   const [addSearchValue, setAddSearchValue] = useState('');
 
   const onChangeAddSearchValue = useCallback(
