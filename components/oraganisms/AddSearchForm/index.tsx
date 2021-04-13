@@ -22,9 +22,7 @@ const AddSearchForm = () => {
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const data = {
-        seq: searchTags.length + 1,
         name: addSearchValue,
-        createdAt: '2021-03-14',
       };
       dispatch(addSearchTagAction(data));
     },

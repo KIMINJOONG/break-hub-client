@@ -11,7 +11,7 @@ export const loadSearchTagsAction = () => ({
   type: LOAD_SEARCH_TAGS_REQUEST,
 });
 
-export const addSearchTagAction = (data: searchTag) => ({
+export const addSearchTagAction = (data: any) => ({
   type: ADD_SEARCH_TAG_REQUEST,
   data,
 });

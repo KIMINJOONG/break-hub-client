@@ -62,7 +62,8 @@ const reducer = (state = initialState, action: SearchTagActionType) => {
         const updateIndex = draft.searchTags.findIndex(
           (item: searchTag) => action.data.data.seq === item.seq
         );
-        draft.searchTags[updateIndex] = action.data.data;
+
+        draft.searchTags[updateIndex] = { ...action.data.data };
         draft.updateSearchTag = action.data;
         draft.updateSearchTagLoading = false;
         draft.updateSearchTagDone = true;
