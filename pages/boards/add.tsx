@@ -29,7 +29,7 @@ const AddBoard = () => {
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <SideMenuList />
       </div>
-      <div>
+      <div style={{ flex: 1 }}>
         <AddBoardForm setIsUpdate={() => null} />
       </div>
     </MainComponent>

@@ -52,7 +52,13 @@ const CategoryBoards = () => {
         }}
       >
         <div style={{ textAlign: 'right' }}>
-          <span onClick={() => router.push('/boards/add')}>글쓰기</span>
+          <button
+            type="button"
+            onClick={() => router.push('/boards/add')}
+            style={{ width: '80px', height: '50px' }}
+          >
+            글쓰기
+          </button>
         </div>
         <ul>
           {boards &&

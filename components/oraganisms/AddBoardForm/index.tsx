@@ -166,7 +166,7 @@ const AddBoardForm = ({
         display: 'flex',
         width: '100%',
         flexDirection: 'column',
-        padding: '20px',
+        padding: '0.5rem',
         boxSizing: 'border-box',
       }}
     >
@@ -207,14 +207,18 @@ const AddBoardForm = ({
             {searchTags.map((searchTag: searchTag) => (
               <li key={searchTag.seq}>
                 <input
+                  style={{ width: '15px', height: '15px' }}
                   type="checkbox"
+                  id={`checkbox_${searchTag.seq}`}
                   checked={
                     checkboxes[searchTag.seq] &&
                     checkboxes[searchTag.seq].checked
                   }
                   onChange={(e) => onChangeCheckbox(e, searchTag.seq)}
                 />
-                {searchTag.name}
+                <label htmlFor={`checkbox_${searchTag.seq}`}>
+                  {searchTag.name}
+                </label>
               </li>
             ))}
           </ul>
