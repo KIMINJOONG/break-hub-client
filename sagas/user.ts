@@ -46,7 +46,7 @@ function loadMeAPI() {
   return axios.get(`/auth/me`);
 }
 
-function* loadMe(action: any) {
+function* loadMe() {
   try {
     const result: AxiosResponse<any> = yield call(loadMeAPI);
     yield put({
