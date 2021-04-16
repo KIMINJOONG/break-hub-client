@@ -22,6 +22,8 @@ const MainComponent = styled.div`
 `;
 
 const Detail = () => {
+  const { me } = useSelector((state: RootState) => state.user);
+
   const router = useRouter();
   const dispatch = useDispatch();
   const { categorySeq, boardSeq } = router.query;
@@ -33,13 +35,17 @@ const Detail = () => {
   );
 
   useEffect(() => {
-    dispatch(
-      loadBoardAction(
-        parseInt(categorySeq as string, 10),
-        parseInt(boardSeq as string, 10)
-      )
-    );
-  }, [categorySeq, boardSeq]);
+    if (!me) {
+      void router.push('/login');
+    } else {
+      dispatch(
+        loadBoardAction(
+          parseInt(categorySeq as string, 10),
+          parseInt(boardSeq as string, 10)
+        )
+      );
+    }
+  }, [me, categorySeq, boardSeq]);
 
   useEffect(() => {
     if (removeBoardDone) {

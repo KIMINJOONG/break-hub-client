@@ -1,8 +1,11 @@
-import React from 'react';
+import { useRouter } from 'next/dist/client/router';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Span from '../../components/atoms/Span';
 import AddBoardForm from '../../components/oraganisms/AddBoardForm';
 import SideMenuList from '../../components/oraganisms/SideMenuList';
+import { RootState } from '../../reducers';
 
 const MainComponent = styled.div`
   display: flex;
@@ -10,6 +13,13 @@ const MainComponent = styled.div`
 `;
 
 const AddBoard = () => {
+  const { me } = useSelector((state: RootState) => state.user);
+  const router = useRouter();
+  useEffect(() => {
+    if (!me) {
+      void router.push('/login');
+    }
+  }, [me]);
   return (
     <MainComponent>
       <div

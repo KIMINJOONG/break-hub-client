@@ -14,6 +14,7 @@ import {
   UPDATE_SEARCH_TAG_REQUEST,
   UPDATE_SEARCH_TAG_SUCCESS,
 } from '../actions/searchTag/type';
+import Cookies from 'js-cookie';
 
 function loadSearchTagAPI() {
   return axios.get(`/searchTags`, { withCredentials: true });
@@ -39,9 +40,9 @@ function* loadSearchTag() {
 }
 
 function addSearchTagAPI(data: any) {
-  //     const token = jsCookie.get("token");
-  //   const Authorization = token ? `token=${token}` : "";
-  return axios.post('/searchTags', data);
+  const token = Cookies.get('token');
+  const Authorization = token ? token : '';
+  return axios.post('/searchTags', data, { headers: { Authorization } });
 }
 
 function* addSearchTag(action: any) {
@@ -63,9 +64,11 @@ function* addSearchTag(action: any) {
 }
 
 function updateSearchTagAPI(seq: number, data: any) {
-  //     const token = jsCookie.get("token");
-  //   const Authorization = token ? `token=${token}` : "";
-  return axios.patch(`/searchTags/${seq}`, data);
+  const token = Cookies.get('token');
+  const Authorization = token ? token : '';
+  return axios.patch(`/searchTags/${seq}`, data, {
+    headers: { Authorization },
+  });
 }
 
 function* updateSearchTag(action: any) {
@@ -90,9 +93,9 @@ function* updateSearchTag(action: any) {
 }
 
 function removeSearchTagAPI(seq: number) {
-  //     const token = jsCookie.get("token");
-  //   const Authorization = token ? `token=${token}` : "";
-  return axios.delete(`/searchTags/${seq}`);
+  const token = Cookies.get('token');
+  const Authorization = token ? token : '';
+  return axios.delete(`/searchTags/${seq}`, { headers: { Authorization } });
 }
 
 function* removeSearchTag(action: any) {

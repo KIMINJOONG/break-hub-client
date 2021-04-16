@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 
 import searchTag from './searchTag';
 import board from './board';
+import user from './user';
 
 // (이전상태, 액션) => 다음상태
 const rootReducer = (state: any, action: any) => {
@@ -13,6 +14,7 @@ const rootReducer = (state: any, action: any) => {
       const combinedReducer = combineReducers({
         searchTag,
         board,
+        user,
       });
       return combinedReducer(state, action);
     }

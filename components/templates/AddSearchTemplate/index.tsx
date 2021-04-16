@@ -1,7 +1,5 @@
-import axios from 'axios';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { END } from 'redux-saga';
 import styled from 'styled-components';
 import {
   loadSearchTagsAction,
@@ -9,9 +7,7 @@ import {
   removeSearchTagAction,
   updateSearchTagAction,
 } from '../../../actions/searchTag/action';
-import { LOAD_SEARCH_TAGS_REQUEST } from '../../../actions/searchTag/type';
 import { RootState } from '../../../reducers';
-import wrapper from '../../../stores/configureStore';
 import { searchTag } from '../../../type/server';
 import { BLUE_COLOR, RED_COLOR } from '../../../utils/theme';
 import Button from '../../atoms/Button';
@@ -173,21 +169,5 @@ const AddSearchTemplate = () => {
     </AddSearchComponent>
   );
 };
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  async (context: any) => {
-    const cookie = context.req ? context.req.headers.cookie : '';
-    axios.defaults.headers.Authorization = '';
-    axios.defaults.withCredentials = true;
-    if (context.req && cookie) {
-      axios.defaults.headers.Authorization = cookie;
-    }
-    context.store.dispatch({
-      type: LOAD_SEARCH_TAGS_REQUEST,
-    });
-    context.store.dispatch(END);
-    await context.store.sagaTask.toPromise();
-  }
-);
 
 export default AddSearchTemplate;

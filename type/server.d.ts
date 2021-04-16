@@ -19,4 +19,11 @@ export type Board = {
   videoUrl: string;
   category: Category;
   searchTags: Array<searchTag>;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type logInForm = {
+  email: string;
+  password: string;
 };

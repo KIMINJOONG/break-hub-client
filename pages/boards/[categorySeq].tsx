@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import wrapper from '../../stores/configureStore';
-import { LOAD_BOARDS_REQUEST } from '../../actions/board/type';
 import { END } from 'redux-saga';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers';
@@ -11,6 +10,8 @@ import { Board, searchTag } from '../../type/server';
 import { useRouter } from 'next/dist/client/router';
 import Span from '../../components/atoms/Span';
 import SideMenuList from '../../components/oraganisms/SideMenuList';
+import cookies from 'next-cookies';
+import { LOAD_ME_REQUEST } from '../../actions/user/type';
 
 const MainComponent = styled.div`
   display: flex;
@@ -18,13 +19,20 @@ const MainComponent = styled.div`
 `;
 
 const CategoryBoards = () => {
+  const { me } = useSelector((state: RootState) => state.user);
+
   const { boards } = useSelector((state: RootState) => state.board);
   const dispatch = useDispatch();
   const router = useRouter();
 
   useEffect(() => {
-    dispatch(loadBoardsAction());
-  }, []);
+    if (!me) {
+      void router.push('/login');
+    } else {
+      dispatch(loadBoardsAction());
+    }
+  }, [me]);
+
   return (
     <MainComponent>
       <div
@@ -97,7 +105,7 @@ const CategoryBoards = () => {
                     }}
                   >
                     <h2>{board.title}</h2>
-                    <span>2020-01-30</span>
+                    <span>{board.createdAt.substring(0, 10)}</span>
                   </div>
                   <div>
                     <p>{board.content}</p>
@@ -120,15 +128,17 @@ const CategoryBoards = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context: any) => {
-    const cookie = context.req ? context.req.headers.cookie : '';
-    axios.defaults.headers.Authorization = '';
-    axios.defaults.withCredentials = true;
-    if (context.req && cookie) {
-      axios.defaults.headers.Authorization = cookie;
+    const { token } = cookies(context);
+    const state = context.store.getState();
+    if (token) {
+      axios.defaults.headers.Authorization = token;
+      axios.defaults.withCredentials = true;
     }
-    context.store.dispatch({
-      type: LOAD_BOARDS_REQUEST,
-    });
+    if (!state.user.me) {
+      context.store.dispatch({
+        type: LOAD_ME_REQUEST,
+      });
+    }
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }

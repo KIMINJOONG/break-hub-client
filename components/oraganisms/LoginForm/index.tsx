@@ -1,15 +1,27 @@
-import React, { useCallback, useState } from 'react';
+import { useRouter } from 'next/dist/client/router';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { logInAction } from '../../../actions/user/action';
+import { RootState } from '../../../reducers';
 import { BLUE_COLOR } from '../../../utils/theme';
 import Button from '../../atoms/Button';
 import FormItem from '../../molecules/FormItem';
 
 const LoginForm = () => {
-  const [id, setId] = useState('');
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { logInMessage, logInDone } = useSelector(
+    (state: RootState) => state.user
+  );
 
-  const onChangeId = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
-  }, []);
+  const onChangeEmail = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setEmail(e.target.value);
+    },
+    []
+  );
 
   const onChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,10 +30,24 @@ const LoginForm = () => {
     []
   );
 
-  const onSubmitLogin = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('로그인');
-  }, []);
+  const onSubmitLogin = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const data = {
+        email,
+        password,
+      };
+      dispatch(logInAction(data));
+    },
+    [email, password]
+  );
+
+  useEffect(() => {
+    if (logInDone) {
+      alert(logInMessage);
+      void router.push(`/main`);
+    }
+  }, [logInDone]);
   return (
     <form
       onSubmit={onSubmitLogin}
@@ -42,8 +68,8 @@ const LoginForm = () => {
         id={'id'}
         text={'아이디'}
         type={'text'}
-        value={id}
-        onChange={onChangeId}
+        value={email}
+        onChange={onChangeEmail}
         placeholder={'아이디를 입력해주세요.'}
       />
       <FormItem

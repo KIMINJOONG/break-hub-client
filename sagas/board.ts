@@ -18,6 +18,7 @@ import {
   UPDATE_BOARD_SUCCESS,
 } from '../actions/board/type';
 import { Board } from '../type/server';
+import Cookies from 'js-cookie';
 
 function loadBoardsAPI() {
   //     const token = jsCookie.get("token");
@@ -71,9 +72,9 @@ function* loadBoard(action: any) {
 }
 
 function addBoardAPI(data: any) {
-  // const token = jsCookie.get('token');
-  // const Authorization = token ? `token=${token}` : '';
-  return axios.post('/boards', data);
+  const token = Cookies.get('token');
+  const Authorization = token ? token : '';
+  return axios.post('/boards', data, { headers: { Authorization } });
 }
 
 function* addBoard(action: any) {
@@ -96,9 +97,9 @@ function* addBoard(action: any) {
 }
 
 function updateBoardAPI(seq: number, data: any) {
-  // const token = jsCookie.get('token');
-  // const Authorization = token ? `token=${token}` : '';
-  return axios.patch(`/boards/${seq}`, data);
+  const token = Cookies.get('token');
+  const Authorization = token ? token : '';
+  return axios.patch(`/boards/${seq}`, data, { headers: { Authorization } });
 }
 
 function* updateBoard(action: any) {
@@ -124,9 +125,9 @@ function* updateBoard(action: any) {
 }
 
 function removeBoardAPI(seq: number) {
-  // const token = jsCookie.get('token');
-  // const Authorization = token ? `token=${token}` : '';
-  return axios.delete(`/boards/${seq}`);
+  const token = Cookies.get('token');
+  const Authorization = token ? token : '';
+  return axios.delete(`/boards/${seq}`, { headers: { Authorization } });
 }
 
 function* removeBoard(action: any) {

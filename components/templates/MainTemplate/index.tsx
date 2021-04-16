@@ -7,7 +7,6 @@ import { RootState } from '../../../reducers';
 import { loadBoardsAction } from '../../../actions/board/action';
 import { Board, searchTag } from '../../../type/server';
 import { useRouter } from 'next/dist/client/router';
-import wrapper from '../../../stores/configureStore';
 
 const MainComponent = styled.div`
   display: flex;
@@ -16,6 +15,7 @@ const MainComponent = styled.div`
 
 const MainTemplate = () => {
   const { boards } = useSelector((state: RootState) => state.board);
+
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -104,21 +104,5 @@ const MainTemplate = () => {
     </MainComponent>
   );
 };
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  async (context: any) => {
-    // const cookie = context.req ? context.req.headers.cookie : '';
-    // axios.defaults.headers.Authorization = '';
-    // axios.defaults.withCredentials = true;
-    // if (context.req && cookie) {
-    //   axios.defaults.headers.Authorization = cookie;
-    // }
-    // context.store.dispatch({
-    //   type: LOAD_BOARDS_REQUEST,
-    // });
-    // context.store.dispatch(END);
-    await context.store.sagaTask.toPromise();
-  }
-);
 
 export default MainTemplate;
