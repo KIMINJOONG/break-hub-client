@@ -75,7 +75,7 @@ const LoginForm = () => {
       <FormItem
         id={'password'}
         text={'비밀번호'}
-        type={'text'}
+        type={'password'}
         value={password}
         onChange={onChangePassword}
         placeholder={'비밀번호를 입력해주세요.'}
