@@ -60,6 +60,7 @@ const AddBoardForm = ({
   useEffect(() => {
     if (updateBoardDone) {
       alert(updateBoard.message);
+      setIsUpdate(false);
       void router.push(
         `/boards/${updateBoard.data.category.seq}/${updateBoard.data.seq}`
       );
