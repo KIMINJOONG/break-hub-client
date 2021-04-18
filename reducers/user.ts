@@ -29,6 +29,7 @@ const reducer = (state = initialState, action: UserActionType) => {
         draft.me = null;
         draft.loadMeDone = false;
         draft.loadMeLoading = true;
+        draft.loadMeError = null;
         break;
       }
       case LOAD_ME_SUCCESS: {
