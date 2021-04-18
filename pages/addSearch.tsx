@@ -4,6 +4,7 @@ import cookies from 'next-cookies';
 import { useRouter } from 'next/dist/client/router';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { LOAD_SEARCH_TAGS_REQUEST } from '../actions/searchTag/type';
 import { LOAD_ME_REQUEST } from '../actions/user/type';
 import AddSearchTemplate from '../components/templates/AddSearchTemplate';
 import { RootState } from '../reducers';
@@ -42,6 +43,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
     context.store.dispatch({
       type: LOAD_ME_REQUEST,
+    });
+    context.store.dispatch({
+      type: LOAD_SEARCH_TAGS_REQUEST,
     });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();

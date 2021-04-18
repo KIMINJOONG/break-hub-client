@@ -2,10 +2,7 @@ import { useRouter } from 'next/dist/client/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import {
-  loadBoardAction,
-  removeBoardAction,
-} from '../../../../actions/board/action';
+import { removeBoardAction } from '../../../../actions/board/action';
 import Span from '../../../../components/atoms/Span';
 import SideMenuList from '../../../../components/oraganisms/SideMenuList';
 import { RootState } from '../../../../reducers';
@@ -20,6 +17,7 @@ import cookies from 'next-cookies';
 import axios from 'axios';
 import { LOAD_ME_REQUEST } from '../../../../actions/user/type';
 import { END } from '@redux-saga/core';
+import { LOAD_BOARD_REQUEST } from '../../../../actions/board/type';
 
 const MainComponent = styled.div`
   display: flex;
@@ -33,7 +31,6 @@ const Detail = () => {
 
   const router = useRouter();
   const dispatch = useDispatch();
-  const { categorySeq, boardSeq } = router.query;
   const [isUpdate, setIsUpdate] = useState(false);
   const board: Board = useSelector((statet: RootState) => statet.board.board);
   const { removeBoardDone } = useSelector((state: RootState) => state.board);
@@ -45,16 +42,9 @@ const Detail = () => {
     if (loadMeDone) {
       if (!me) {
         void router.push('/login');
-      } else {
-        dispatch(
-          loadBoardAction(
-            parseInt(categorySeq as string, 10),
-            parseInt(boardSeq as string, 10)
-          )
-        );
       }
     }
-  }, [loadMeDone, categorySeq, boardSeq]);
+  }, [loadMeDone]);
 
   useEffect(() => {
     if (loadMeError) {
@@ -165,6 +155,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
     context.store.dispatch({
       type: LOAD_ME_REQUEST,
+    });
+
+    context.store.dispatch({
+      type: LOAD_BOARD_REQUEST,
+      categorySeq: parseInt(context.query.categorySeq as string, 10),
+      boardSeq: parseInt(context.query.boardSeq as string, 10),
     });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();

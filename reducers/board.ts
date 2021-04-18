@@ -82,7 +82,6 @@ const reducer = (state = initialState, action: boardActionType) => {
         break;
       }
       case ADD_BOARD_REQUEST: {
-        draft.board = null;
         draft.addBoardLoading = true;
         draft.addBoardDone = false;
         draft.addBoardError = null;
@@ -101,7 +100,6 @@ const reducer = (state = initialState, action: boardActionType) => {
         break;
       }
       case LOAD_BOARD_REQUEST: {
-        draft.board = null;
         draft.loadBoardLoading = true;
         draft.loadBoardDone = false;
         draft.loadBoardError = null;
@@ -119,7 +117,6 @@ const reducer = (state = initialState, action: boardActionType) => {
         break;
       }
       case LOAD_BOARDS_REQUEST: {
-        draft.boards = [];
         draft.loadBoardsLoading = true;
         draft.loadBoardsDone = false;
         draft.loadBoardsError = null;

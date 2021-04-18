@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
-  loadSearchTagsAction,
   onChangeAddSearchAction,
   removeSearchTagAction,
   updateSearchTagAction,
@@ -30,10 +29,6 @@ const AddSearchTemplate = () => {
     updateSearchTag,
     updateSearchTagDone,
   } = useSelector((state: RootState) => state.searchTag);
-
-  useEffect(() => {
-    dispatch(loadSearchTagsAction());
-  }, []);
 
   useEffect(() => {
     if (removeSearchTagDone) {

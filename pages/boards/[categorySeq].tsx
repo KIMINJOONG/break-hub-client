@@ -3,15 +3,15 @@ import styled from 'styled-components';
 import axios from 'axios';
 import wrapper from '../../stores/configureStore';
 import { END } from 'redux-saga';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers';
-import { loadBoardsAction } from '../../actions/board/action';
 import { Board, searchTag } from '../../type/server';
 import { useRouter } from 'next/dist/client/router';
 import Span from '../../components/atoms/Span';
 import SideMenuList from '../../components/oraganisms/SideMenuList';
 import cookies from 'next-cookies';
 import { LOAD_ME_REQUEST } from '../../actions/user/type';
+import { LOAD_BOARDS_REQUEST } from '../../actions/board/type';
 
 const MainComponent = styled.div`
   display: flex;
@@ -24,15 +24,12 @@ const CategoryBoards = () => {
   );
 
   const { boards } = useSelector((state: RootState) => state.board);
-  const dispatch = useDispatch();
   const router = useRouter();
 
   useEffect(() => {
     if (loadMeDone) {
       if (!me) {
         void router.push('/login');
-      } else {
-        dispatch(loadBoardsAction());
       }
     }
   }, [loadMeDone]);
@@ -80,6 +77,7 @@ const CategoryBoards = () => {
           </button>
         </div>
         <ul>
+          {console.log(boards)}
           {boards &&
             (boards.map((board: Board) => (
               <li
@@ -148,6 +146,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
     context.store.dispatch({
       type: LOAD_ME_REQUEST,
+    });
+
+    context.store.dispatch({
+      type: LOAD_BOARDS_REQUEST,
     });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
