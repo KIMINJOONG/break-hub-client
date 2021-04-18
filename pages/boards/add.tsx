@@ -1,11 +1,16 @@
+import { END } from '@redux-saga/core';
+import axios from 'axios';
+import cookies from 'next-cookies';
 import { useRouter } from 'next/dist/client/router';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { LOAD_ME_REQUEST } from '../../actions/user/type';
 import Span from '../../components/atoms/Span';
 import AddBoardForm from '../../components/oraganisms/AddBoardForm';
 import SideMenuList from '../../components/oraganisms/SideMenuList';
 import { RootState } from '../../reducers';
+import wrapper from '../../stores/configureStore';
 
 const MainComponent = styled.div`
   display: flex;
@@ -13,13 +18,24 @@ const MainComponent = styled.div`
 `;
 
 const AddBoard = () => {
-  const { me } = useSelector((state: RootState) => state.user);
+  const { me, loadMeDone, loadMeError } = useSelector(
+    (state: RootState) => state.user
+  );
   const router = useRouter();
   useEffect(() => {
-    if (!me) {
+    if (loadMeDone) {
+      if (!me) {
+        void router.push('/login');
+      }
+    }
+  }, [loadMeDone]);
+
+  useEffect(() => {
+    if (loadMeError) {
+      alert(loadMeError.message);
       void router.push('/login');
     }
-  }, [me]);
+  }, [loadMeError]);
   return (
     <MainComponent>
       <div
@@ -45,5 +61,22 @@ const AddBoard = () => {
     </MainComponent>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context: any) => {
+    const { token } = cookies(context);
+    if (token) {
+      axios.defaults.headers.Authorization = token;
+      axios.defaults.withCredentials = true;
+    } else {
+      axios.defaults.headers.Authorization = '';
+    }
+    context.store.dispatch({
+      type: LOAD_ME_REQUEST,
+    });
+    context.store.dispatch(END);
+    await context.store.sagaTask.toPromise();
+  }
+);
 
 export default AddBoard;

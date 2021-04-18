@@ -26,6 +26,8 @@ const reducer = (state = initialState, action: UserActionType) => {
   return produce(state, (draft) => {
     switch (action.type) {
       case LOAD_ME_REQUEST: {
+        draft.me = null;
+        draft.loadMeDone = false;
         draft.loadMeLoading = true;
         break;
       }

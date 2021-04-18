@@ -15,6 +15,11 @@ import AddBoardForm from '../../../../components/oraganisms/AddBoardForm';
 import Button from '../../../../components/atoms/Button';
 import { BLUE_COLOR, RED_COLOR } from '../../../../utils/theme';
 import { BasicResponse } from '../../../../type/basicResponse';
+import wrapper from '../../../../stores/configureStore';
+import cookies from 'next-cookies';
+import axios from 'axios';
+import { LOAD_ME_REQUEST } from '../../../../actions/user/type';
+import { END } from '@redux-saga/core';
 
 const MainComponent = styled.div`
   display: flex;
@@ -22,7 +27,9 @@ const MainComponent = styled.div`
 `;
 
 const Detail = () => {
-  const { me } = useSelector((state: RootState) => state.user);
+  const { me, loadMeDone, loadMeError } = useSelector(
+    (state: RootState) => state.user
+  );
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -35,17 +42,26 @@ const Detail = () => {
   );
 
   useEffect(() => {
-    if (!me) {
-      void router.push('/login');
-    } else {
-      dispatch(
-        loadBoardAction(
-          parseInt(categorySeq as string, 10),
-          parseInt(boardSeq as string, 10)
-        )
-      );
+    if (loadMeDone) {
+      if (!me) {
+        void router.push('/login');
+      } else {
+        dispatch(
+          loadBoardAction(
+            parseInt(categorySeq as string, 10),
+            parseInt(boardSeq as string, 10)
+          )
+        );
+      }
     }
-  }, [me, categorySeq, boardSeq]);
+  }, [loadMeDone, categorySeq, boardSeq]);
+
+  useEffect(() => {
+    if (loadMeError) {
+      alert(loadMeError.message);
+      void router.push('/login');
+    }
+  }, [loadMeError]);
 
   useEffect(() => {
     if (removeBoardDone) {
@@ -137,5 +153,22 @@ const Detail = () => {
     </MainComponent>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context: any) => {
+    const { token } = cookies(context);
+    if (token) {
+      axios.defaults.headers.Authorization = token;
+      axios.defaults.withCredentials = true;
+    } else {
+      axios.defaults.headers.Authorization = '';
+    }
+    context.store.dispatch({
+      type: LOAD_ME_REQUEST,
+    });
+    context.store.dispatch(END);
+    await context.store.sagaTask.toPromise();
+  }
+);
 
 export default Detail;

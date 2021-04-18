@@ -10,29 +10,39 @@ import { useRouter } from 'next/dist/client/router';
 import cookies from 'next-cookies';
 
 const Main = () => {
-  const { me } = useSelector((state: RootState) => state.user);
+  const { me, loadMeDone, loadMeError } = useSelector(
+    (state: RootState) => state.user
+  );
   const router = useRouter();
   useEffect(() => {
-    if (!me) {
+    if (loadMeDone) {
+      if (!me) {
+        void router.push('/login');
+      }
+    }
+  }, [loadMeDone]);
+
+  useEffect(() => {
+    if (loadMeError) {
+      alert(loadMeError.message);
       void router.push('/login');
     }
-  }, [me]);
+  }, [loadMeError]);
   return <MainTemplate></MainTemplate>;
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context: any) => {
     const { token } = cookies(context);
-    const state = context.store.getState();
     if (token) {
-      axios.defaults.headers = { Authorization: token };
+      axios.defaults.headers.Authorization = token;
       axios.defaults.withCredentials = true;
+    } else {
+      axios.defaults.headers.Authorization = '';
     }
-    if (!state.user.me) {
-      context.store.dispatch({
-        type: LOAD_ME_REQUEST,
-      });
-    }
+    context.store.dispatch({
+      type: LOAD_ME_REQUEST,
+    });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }

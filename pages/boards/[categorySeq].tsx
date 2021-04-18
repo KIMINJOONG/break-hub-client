@@ -19,19 +19,30 @@ const MainComponent = styled.div`
 `;
 
 const CategoryBoards = () => {
-  const { me } = useSelector((state: RootState) => state.user);
+  const { me, loadMeDone, loadMeError } = useSelector(
+    (state: RootState) => state.user
+  );
 
   const { boards } = useSelector((state: RootState) => state.board);
   const dispatch = useDispatch();
   const router = useRouter();
 
   useEffect(() => {
-    if (!me) {
-      void router.push('/login');
-    } else {
-      dispatch(loadBoardsAction());
+    if (loadMeDone) {
+      if (!me) {
+        void router.push('/login');
+      } else {
+        dispatch(loadBoardsAction());
+      }
     }
-  }, [me]);
+  }, [loadMeDone]);
+
+  useEffect(() => {
+    if (loadMeError) {
+      alert(loadMeError.message);
+      void router.push('/login');
+    }
+  }, [loadMeError]);
 
   return (
     <MainComponent>
@@ -129,16 +140,15 @@ const CategoryBoards = () => {
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context: any) => {
     const { token } = cookies(context);
-    const state = context.store.getState();
     if (token) {
       axios.defaults.headers.Authorization = token;
       axios.defaults.withCredentials = true;
+    } else {
+      axios.defaults.headers.Authorization = '';
     }
-    if (!state.user.me) {
-      context.store.dispatch({
-        type: LOAD_ME_REQUEST,
-      });
-    }
+    context.store.dispatch({
+      type: LOAD_ME_REQUEST,
+    });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }
